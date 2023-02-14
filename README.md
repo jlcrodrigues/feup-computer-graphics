@@ -1,9 +1,9 @@
 # CG 2022/2023
 
-## Group T0xG0y
+## Group T06G03
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
+| José Luís Cunha Rodrigues         | 202008462 | up202008462@up.pt                |
 | Jane Doe         | 201901011 | ...                |
 
 ----

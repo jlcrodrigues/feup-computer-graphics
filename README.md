@@ -4,7 +4,7 @@
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
 | José Luís Cunha Rodrigues         | 202008462 | up202008462@up.pt                |
-| Jane Doe         | 201901011 | ...                |
+| Tiago Filipe Magalhães Barbosa    | 202004926 | up202004926@up.pt             |
 
 ----
 

@@ -19,7 +19,7 @@ export class MyTangram extends CGFobject {
         this.scene.triangle = new MyTriangle(this.scene);
         this.scene.paralelogram = new MyParalelogram(this.scene);
 
-        var mDiamond =[
+        var m =[
             1, 0, 0, 0,  
             0, 1, 0, 0,   
             0, 0, 1, 0,    
@@ -27,7 +27,7 @@ export class MyTangram extends CGFobject {
         ];
     
         this.scene.pushMatrix()
-        this.scene.multMatrix(mDiamond);
+        this.scene.multMatrix(m);
     
         // ---- BEGIN Primitive drawing section
     

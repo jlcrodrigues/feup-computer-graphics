@@ -71,11 +71,15 @@ export class MyScene extends CGFscene {
 
     this.setDefaultAppearance();
 
+    this.pushMatrix();
+    this.rotate(-90 * Math.PI/180, 1, 0, 0);
     this.tangram.display();
+    this.popMatrix();
+    
 
-    this.pushMatrix()
-    this.scale(2,2,2);
-    this.translate(0.5, 0.5, -0.5);
+    this.pushMatrix();
+    this.translate(0.5, -0.5, 0.5);
+    this.rotate(-90 * Math.PI/180, 1, 0, 0);
     this.cube.display();
     this.popMatrix();
 

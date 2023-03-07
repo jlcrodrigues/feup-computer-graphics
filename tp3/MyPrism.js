@@ -12,6 +12,7 @@ export class MyPrism extends CGFobject {
 		super(scene);
 		this.slices = slices;
 		this.stacks = stacks;
+        this.height = 1 / stacks;
 
 		this.initBuffers();
 	}
@@ -33,7 +34,7 @@ export class MyPrism extends CGFobject {
 
         this.indices = [];
         for (let i = 0; i < this.slices; i++) {
-            this.indices.push(0, i+1, (i+1)%this.slices+1);
+            this.indices.push(0, (i+1)%this.slices+1, i+1);
         }
 
         this.normals = [];
@@ -41,21 +42,21 @@ export class MyPrism extends CGFobject {
             this.normals.push(0, 0, 1);
         }
 
-        this.vertices.push(0,0,-1);
+        this.vertices.push(0,0,1);
 
         // now create the bottom part of prism with 1 unit in distance from the top
         for (let i = 0; i < this.slices; i++) {
             const x = size * Math.cos(i * angle);
             const y = size * Math.sin(i * angle);
-            this.vertices.push(x, y, -1);
+            this.vertices.push(x, y, 1);
         }
 
         for (let i = 0; i < this.slices; i++) {
-            this.indices.push(this.slices+1,this.slices+1+(i+1)%this.slices+1, this.slices+1+i+1);
+            this.indices.push(this.slices+1+i+1,this.slices+1+(i+1)%this.slices+1, this.slices+1);
         }
 
         for (let i = 0; i <= this.slices; i++) {
-            this.normals.push(0, 0, -1);
+            this.normals.push(0, 0, 1);
         }
 
         console.log(this.vertices); //6*(slices+1)
@@ -63,31 +64,33 @@ export class MyPrism extends CGFobject {
 
 
         // now create the sides of the prism
-        for (let i = 0; i < this.slices; i++) {
-            const x1 = size * Math.cos(i * angle);
-            const y1 = size * Math.sin(i * angle);
-            const x2 = size * Math.cos((i + 1) * angle);
-            const y2 = size * Math.sin((i + 1) * angle);
+        for (let floor = 0; floor < this.stacks; floor++) {
+            for (let i = 0; i < this.slices; i++) {
+                const x1 = size * Math.cos(i * angle);
+                const y1 = size * Math.sin(i * angle);
+                const x2 = size * Math.cos((i + 1) * angle);
+                const y2 = size * Math.sin((i + 1) * angle);
 
-            const offset = 2*(this.slices+1) + i*4;
+                this.vertices.push(x1, y1, floor*this.height);  
+                this.vertices.push(x2, y2, floor*this.height);   
+                this.vertices.push(x2, y2, (floor+1)*this.height);  
+                this.vertices.push(x1, y1, (floor+1)*this.height);  
+                
+                const offset = this.vertices.length / 3 - 4;
 
-            this.vertices.push(x1, y1, 0);  
-            this.vertices.push(x2, y2, 0);   
-            this.vertices.push(x2, y2, -1);  
-            this.vertices.push(x1, y1, -1);  
+                this.indices.push(offset, offset + 1, offset + 2);
+                this.indices.push(offset, offset + 2, offset + 3);
 
-            this.indices.push(offset, offset + 2, offset + 1);
-            this.indices.push(offset, offset + 3, offset + 2);
+                const nx = y2 - y1;
+                const ny = x1 - x2;
+                const nz = 0;
 
-            const nx = y2 - y1;
-            const ny = x1 - x2;
-            const nz = 0;
-
-            this.normals.push(nx, ny, nz);
-            this.normals.push(nx, ny, nz);
-            this.normals.push(nx, ny, nz);
-            this.normals.push(nx, ny, nz); 
-
+                this.normals.push(nx, ny, nz);
+                this.normals.push(nx, ny, nz);
+                this.normals.push(nx, ny, nz);
+                this.normals.push(nx, ny, nz); 
+              
+            }
             
         }
 

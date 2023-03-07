@@ -81,9 +81,14 @@ export class MyPrism extends CGFobject {
                 this.indices.push(offset, offset + 1, offset + 2);
                 this.indices.push(offset, offset + 2, offset + 3);
 
-                const nx = y2 - y1;
-                const ny = x1 - x2;
+                let nx = y2 - y1;
+                let ny = x1 - x2;
                 const nz = 0;
+
+                const mod = Math.sqrt(nx * nx + ny * ny + nz * nz);
+
+                nx /= mod;
+                ny /= mod;
 
                 this.normals.push(nx, ny, nz);
                 this.normals.push(nx, ny, nz);

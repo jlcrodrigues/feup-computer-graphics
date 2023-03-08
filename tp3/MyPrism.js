@@ -39,7 +39,7 @@ export class MyPrism extends CGFobject {
 
         this.normals = [];
         for (let i = 0; i <= this.slices; i++) {
-            this.normals.push(0, 0, 1);
+            this.normals.push(0, 0, -1);
         }
 
         this.vertices.push(0,0,1);

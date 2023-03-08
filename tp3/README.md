@@ -13,6 +13,6 @@
 
 ![Screenshot 3](screenshots/cg-t06g03-tp3-3.png)
 
-- In exercise 3 ... .
+- In exercise 3 we had some difficulties keeping track of the relative positions of the vertices that made up the prism, same as in exercise 2.
 
 ![Screenshot 4](screenshots/cg-t06g03-tp3-4.png)

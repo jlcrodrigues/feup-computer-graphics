@@ -18,63 +18,14 @@ export class MyTangram extends CGFobject {
     }
     initMaterials() {
 
-        // Materials
-		this.materials = [];
-
-		// Material for blue triangle
-        this.materials['blue'] = new CGFappearance(this.scene);
-        this.materials['blue'].setAmbient(0.2, 0.2, 1.0, 1.0);
-        this.materials['blue'].setDiffuse(0.2, 0.2, 1.0, 1.0);
-        this.materials['blue'].setSpecular(1.0, 1.0, 1.0, 1.0);
-        this.materials['blue'].setShininess(10.0);
-        
-
-		// Material for purple triangle
-		this.materials['purple'] = new CGFappearance(this.scene);
-		this.materials['purple'].setAmbient(0.5, 0.0, 0.8, 1.0);
-		this.materials['purple'].setDiffuse(0.5, 0.0, 0.8, 1.0);
-        this.materials['purple'].setSpecular(1.0, 1.0, 1.0, 1.0);
-		this.materials['purple'].setShininess(10.0);
-
-		// Material for red triangle
-		this.materials['red'] = new CGFappearance(this.scene);
-		this.materials['red'].setAmbient(0.8, 0.0, 0.0, 1.0);
-		this.materials['red'].setDiffuse(0.8, 0.0, 0.0, 1.0);
-		this.materials['red'].setSpecular(1.0, 1.0, 1.0, 1.0);
-		this.materials['red'].setShininess(10.0);
-
-        // Material for orange triangle
-        this.materials['orange'] = new CGFappearance(this.scene);
-        this.materials['orange'].setAmbient(0.8, 0.4, 0.0, 1.0);
-        this.materials['orange'].setDiffuse(0.8, 0.4, 0.0, 1.0);
-        this.materials['orange'].setSpecular(1.0, 1.0, 1.0, 1.0);
-        this.materials['orange'].setShininess(10.0);
-
-
-        // Material for pink triangle
-        this.materials['pink'] = new CGFappearance(this.scene);
-        this.materials['pink'].setAmbient(0.8, 0.0, 0.4, 1.0);
-        this.materials['pink'].setDiffuse(1.0, 0.4, 0.8, 1.0);
-        this.materials['pink'].setSpecular(1.0, 1.0, 1.0, 1.0);
-        this.materials['pink'].setShininess(10.0);
-
-
-        // Material for yellow paralelogram
-        this.materials['yellow'] = new CGFappearance(this.scene);
-        this.materials['yellow'].setAmbient(0.8, 0.8, 0.0, 1.0);
-        this.materials['yellow'].setDiffuse(0.8, 0.8, 0.0, 1.0);
-        this.materials['yellow'].setSpecular(1.0, 1.0, 1.0, 1.0);
-        this.materials['yellow'].setShininess(10.0);
-
-        // Material for green diamond
-        this.materials['green'] = new CGFappearance(this.scene);
-        this.materials['green'].setAmbient(0.8, 0.8, 0.8, 1.0);
-        this.materials['green'].setDiffuse(0.8, 0.8, 0.8, 1.0);
-        this.materials['green'].setSpecular(1.0, 1.0, 1.0, 1.0);
-        this.materials['green'].setShininess(10.0);
-        this.materials['green'].loadTexture('images/tangram.png');
-        this.materials['green'].setTextureWrap('REPEAT', 'REPEAT');
-
+        //generic material
+        this.materials = new CGFappearance(this.scene);
+        this.materials.setAmbient(0.8, 0.8, 0.8, 1.0);
+        this.materials.setDiffuse(0.8, 0.8, 0.8, 1.0);
+        this.materials.setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.materials.setShininess(10.0);
+        this.materials.loadTexture('images/tangram.png');
+        this.materials.setTextureWrap('REPEAT', 'REPEAT');
 	}
 
     enableNormalViz(){
@@ -103,7 +54,7 @@ export class MyTangram extends CGFobject {
         // ---- BEGIN Primitive drawing section
         
         // Green diamond
-        this.materials['green'].apply();
+        this.materials.apply();
         this.diamond.display();
     
         // ---- END Primitive drawing section
@@ -116,7 +67,15 @@ export class MyTangram extends CGFobject {
         this.scene.translate(0,0,0);
         this.scene.scale(2,2,2);
         this.scene.rotate(-135 * Math.PI/180,0,0,1);
-        this.materials['blue'].apply();
+        this.materials.apply();
+        //update My triangle texCoords
+        const TexCoordsBlue = [
+            1, 0,
+            0, 0,
+            0.5, 0.5
+        ];
+        this.triangle.texCoords = TexCoordsBlue;
+        this.triangle.updateBuffers();
         this.triangle.display();
         this.scene.popMatrix();
 
@@ -125,15 +84,32 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix()
         this.scene.translate(0,1,0);
         this.scene.rotate(180 * Math.PI/180,0,0,1);
-        this.materials['purple'].apply();
+        this.materials.apply();
+        //update My triangle texCoords
+        const TexCoordsPurple = [
+            0, 0,
+            0, 0.5,
+            0.25, 0.25
+        ];
+        this.triangle.texCoords = TexCoordsPurple;
+        this.triangle.updateBuffers();
         this.triangle.display();
         this.scene.popMatrix();
     
+
         // Red triangle
         this.scene.pushMatrix()
         this.scene.translate(-2,1,0);
         this.scene.rotate(-90 * Math.PI/180,0,0,1);
-        this.materials['red'].apply();
+        this.materials.apply();
+        //update My triangle texCoords
+        const TexCoordsRed = [
+            0.25, 0.75,
+            0.75, 0.75,
+            0.5, 0.5
+        ];
+        this.triangle.texCoords = TexCoordsRed;
+        this.triangle.updateBuffers();
         this.triangle.display();
         this.scene.popMatrix();
     
@@ -142,7 +118,15 @@ export class MyTangram extends CGFobject {
         this.scene.translate(3*(Math.sqrt(2))-1,Math.sqrt(2)-1,0);
         this.scene.scale(2,2,2);
         this.scene.rotate(45 * Math.PI/180,0,0,1);
-        this.materials['orange'].apply();
+        this.materials.apply();
+        //update My triangle texCoords
+        const TexCoordsOrange = [
+            1, 1,
+            1, 0,
+            0.5, 0.5
+        ];
+        this.triangle.texCoords = TexCoordsOrange;
+        this.triangle.updateBuffers();
         this.triangle.display();
         this.scene.popMatrix();
     
@@ -151,7 +135,15 @@ export class MyTangram extends CGFobject {
         this.scene.translate(-Math.sqrt(2),1.5+Math.sqrt(2),0);
         this.scene.scale(1.5,1.5,1.5);
         this.scene.rotate(180 * Math.PI/180,0,0,1);
-        this.materials['pink'].apply();
+        this.materials.apply();
+        //update My triangle texCoords
+        const TexCoordsPink = [
+            0.5, 1,
+            0, 0.5,
+            0, 1
+        ];
+        this.triangle.texCoords = TexCoordsPink;
+        this.triangle.updateBuffers();
         this.triangle.display();
         this.scene.popMatrix();
     
@@ -159,7 +151,7 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix()
         this.scene.translate(2*(Math.sqrt(2))-1,-1,0);
         this.scene.scale(Math.sqrt(2),Math.sqrt(2),Math.sqrt(2));
-        this.materials['yellow'].apply();
+        this.materials.apply();
         this.paralelogram.display();
         this.scene.popMatrix();
 

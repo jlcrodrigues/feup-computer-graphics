@@ -40,5 +40,6 @@ export class MyTriangle extends CGFobject {
         this.initBuffers();
         this.initNormalVizBuffers();
     }
+
 }
 

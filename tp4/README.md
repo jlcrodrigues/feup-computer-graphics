@@ -8,6 +8,6 @@
 
 ![Screenshot 1](screenshots/cg-t06g03-tp4-1.png)
 
-- In exercise 2 ...
+- In exercise 2 a problem was figuring how to render the texture with 'nearest'.
 
 ![Screenshot 2](screenshots/cg-t06g03-tp4-2.png)

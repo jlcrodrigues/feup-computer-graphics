@@ -13,3 +13,7 @@
 ### 1.2
 
 ![Screenshot 2](screenshots/cg-t06g03-tp5-2.png)
+
+- In exercise 2 we had some difficulties adjusting the right coefficients to match the example's motion.
+
+![Screenshot 3](screenshots/cg-t06g03-tp5-3.png)

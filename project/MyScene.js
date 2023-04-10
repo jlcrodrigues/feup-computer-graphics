@@ -52,7 +52,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
       1.0,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
+      vec3.fromValues(10, 10, 15),
       vec3.fromValues(0, 0, 0)
     );
   }

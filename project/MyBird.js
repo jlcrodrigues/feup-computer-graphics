@@ -4,6 +4,7 @@ import { MyCone } from './MyCone.js';
 import { MyPyramid } from './MyPyramid.js';
 import { MyCilinder } from './MyCilinder.js';
 import { MyBirdHead } from './MyBirdHead.js';
+import { MyBirdBody } from './MyBirdBody.js';
 
 /**
  * MyBird
@@ -18,6 +19,7 @@ export class MyBird extends CGFobject {
         this.pyramid = new MyPyramid(this.scene, 4, 1);
         this.cilinder = new MyCilinder(this.scene, 3, 1);
         this.birdHead = new MyBirdHead(this.scene);
+        this.birdBody = new MyBirdBody(this.scene);
         
         this.initMaterials();
     }
@@ -53,7 +55,7 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(1.0, 0.0, 0.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(0.5,0,0.5);
+        this.scene.translate(0.45,0,0.45);
         this.scene.scale(0.25,0.25,0.25);
         this.cube.display();
         this.scene.popMatrix();
@@ -65,7 +67,7 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(1.0, 0.0, 0.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(-0.5,0,0.5);
+        this.scene.translate(-0.45,0,0.45);
         this.scene.scale(0.25,0.25,0.25);
         this.cube.display();
         this.scene.popMatrix();
@@ -78,7 +80,7 @@ export class MyBird extends CGFobject {
         this.materials.setShininess(10.0);
         this.materials.apply();
         this.scene.translate(0,-0.2,0.6);
-        this.scene.scale(0.3,0.3,0.5);
+        this.scene.scale(0.2,0.2,0.5);
         this.scene.rotate(Math.PI/2,1,0,0);
         this.pyramid.display();
         this.scene.popMatrix();
@@ -90,10 +92,9 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(0,-0.8,-0.8);
-        this.scene.scale(1.2,1.5,2);
-        this.scene.rotate(Math.PI/2,1,0,0);
-        this.cube.display();
+        this.scene.translate(0,-0.4,-1.4);
+        this.scene.rotate(-Math.PI/8,1,0,0);
+        this.birdBody.display();
         this.scene.popMatrix();
 
         //light blue tail
@@ -103,10 +104,11 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(0,-0.8,-1.8);
-        this.scene.scale(0.7,0.7,1);
-        this.scene.rotate(-Math.PI/4,0,0,1);
+        this.scene.translate(0,-1.19,-2.28);
+        this.scene.rotate(-Math.PI/8,1,0,0);
         this.scene.rotate(-Math.PI/2,1,0,0);
+        this.scene.scale(0.75,0.7,0.58);
+        this.scene.rotate(Math.PI/4,0,1,0);
         this.pyramid.display();
         this.scene.popMatrix();
 
@@ -117,7 +119,7 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(1,0,-0.8);
+        this.scene.translate(1,-0.1,-1.2);
         this.scene.rotate(Math.PI/8,0,0,1);
         this.scene.scale(1.2,0.1,1);
         this.cube.display();
@@ -130,7 +132,7 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(2,0.1,-0.8);
+        this.scene.translate(2,0,-1.2);
         this.scene.rotate(-Math.PI/8,0,0,1);
         this.scene.rotate(-Math.PI/2,0,0,1);
         this.scene.rotate(Math.PI/2,0,1,0);
@@ -146,7 +148,7 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(-1,0,-0.8);
+        this.scene.translate(-1,-0.1,-1.2);
         this.scene.rotate(-Math.PI/8,0,0,1);
         this.scene.scale(1.2,0.1,1);
         this.cube.display();
@@ -159,7 +161,7 @@ export class MyBird extends CGFobject {
         this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
         this.materials.setShininess(10.0);
         this.materials.apply();
-        this.scene.translate(-1.95,0,-0.8);
+        this.scene.translate(-1.95,-0.1,-1.2);
         this.scene.rotate(Math.PI/8,0,0,1);
         this.scene.rotate(Math.PI/2,0,0,1);
         this.scene.rotate(Math.PI/2,0,1,0);

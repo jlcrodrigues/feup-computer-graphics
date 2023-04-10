@@ -1,5 +1,5 @@
 import {CGFobject,CGFappearance} from '../lib/CGF.js';
-import { MyUnitCubeQuad } from './MyUnitCubeQuad.js';
+import { MyUnitCube } from './MyUnitCube.js';
 import { MyCone } from './MyCone.js';
 import { MyPyramid } from './MyPyramid.js';
 import { MyCilinder } from './MyCilinder.js';
@@ -12,7 +12,7 @@ import { MyCilinder } from './MyCilinder.js';
 export class MyBird extends CGFobject {
 	constructor(scene) {
 		super(scene);
-        this.cube = new MyUnitCubeQuad(this.scene);
+        this.cube = new MyUnitCube(this.scene);
         this.cone = new MyCone(this.scene, 8, 20);
         this.pyramid = new MyPyramid(this.scene, 4, 25);
         this.cilinder = new MyCilinder(this.scene, 3, 20);

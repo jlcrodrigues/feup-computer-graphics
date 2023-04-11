@@ -33,7 +33,7 @@ export class MyBirdWing extends CGFobject {
 
         //wing 2nd part
         this.scene.pushMatrix();
-        this.scene.translate(1.1-Math.abs(Math.sin(t*5))*0.33,0.05-Math.sin(t*5)*0.7,0);
+        this.scene.translate(1.1-Math.abs(Math.sin(t*5))*0.35,0.05-Math.sin(t*5)*0.705,0);
         this.scene.rotate(-(Math.PI/3)*Math.sin(t*5),0,0,1);
         this.scene.rotate(-Math.PI/2,0,0,1);
         this.scene.rotate(Math.PI/2,0,1,0);

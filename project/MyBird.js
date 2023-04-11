@@ -57,14 +57,14 @@ export class MyBird extends CGFobject {
         // left wing
         this.scene.pushMatrix();
         this.scene.translate(0,Math.sin(this.time*5)*0.3,0);
-        this.scene.translate(1.2,-0.7,-1.3);
+        this.scene.translate(1.2,-0.75,-1.3);
         this.leftBirdWing.display(this.time);
         this.scene.popMatrix();
 
         // right wing
         this.scene.pushMatrix();
         this.scene.translate(0,Math.sin(this.time*5)*0.3,0);
-        this.scene.translate(-1.2,-0.7,-1.3);
+        this.scene.translate(-1.2,-0.75,-1.3);
         this.scene.rotate(Math.PI,0,1,0);
         this.rightBirdWing.display(this.time);
         this.scene.popMatrix();

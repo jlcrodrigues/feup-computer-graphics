@@ -27,7 +27,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.bird = new MyBird(this,0,0.15,[0,3,0]);
+    this.bird = new MyBird(this,0,0,[0,3,0]);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -56,7 +56,7 @@ export class MyScene extends CGFscene {
       1.0,
       0.1,
       1000,
-      vec3.fromValues(10, 10, 15),
+      vec3.fromValues(50, 10, 15),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -95,8 +95,7 @@ export class MyScene extends CGFscene {
     this.bird.time += 0.01;
     this.bird.updatePosition();
     this.checkKeys();
-    console.log("orientation " + this.bird.orientation+ " velocity " +this.bird.velocity + " position " + this.bird.position);
-
+    //console.log("orientation " + this.bird.orientation+ " velocity " +this.bird.velocity + " position " + this.bird.position);
   }
 
   display() {
@@ -124,7 +123,9 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.pushMatrix();
-    this.scale(0.6,0.6,0.6);
+    this.translate(this.bird.position[0],this.bird.position[1],this.bird.position[2]);
+    this.scale(0.6*this.scaleFactor,0.6*this.scaleFactor,0.6*this.scaleFactor);
+    this.rotate(this.bird.orientation * Math.PI/180,0,1,0);
     this.bird.display();
     this.popMatrix();
 

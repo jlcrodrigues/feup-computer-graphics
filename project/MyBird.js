@@ -46,11 +46,11 @@ export class MyBird extends CGFobject {
     }
 
     accelerate(v){
-        if(this.velocity+v > 0.15 && this.velocity+v < 1.25){
+        if(this.velocity+v > 0 && this.velocity+v < 1.25){
             this.velocity += v;   
         }
-        else if (this.velocity+v <= 0.15){
-            this.velocity = 0.15;
+        else if (this.velocity+v <= 0){
+            this.velocity = 0;
         }
         else {
             this.velocity = 1.25;
@@ -63,16 +63,11 @@ export class MyBird extends CGFobject {
 
     reset(){
         this.orientation = 0;
-        this.velocity = 0.15;
+        this.velocity = 0;
         this.position = [0,3,0];
     }
 
     display(){
-
-        this.scene.pushMatrix();
-        this.scene.translate(this.position[0],this.position[1],this.position[2]);
-        this.scene.rotate(this.orientation * Math.PI/180,0,1,0);
-
 
         //head
         this.scene.pushMatrix();
@@ -102,8 +97,6 @@ export class MyBird extends CGFobject {
         this.scene.translate(-1.2,-0.75,-1.3);
         this.scene.rotate(Math.PI,0,1,0);
         this.rightBirdWing.display(this.time,this.velocity);
-        this.scene.popMatrix();
-
         this.scene.popMatrix();
 
     }

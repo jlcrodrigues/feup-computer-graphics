@@ -32,6 +32,7 @@ export class MyScene extends CGFscene {
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
+    this.speedFactor = 1;
 
     this.enableTextures(true);
 
@@ -93,6 +94,8 @@ export class MyScene extends CGFscene {
   // called periodically (as per setUpdatePeriod() in init())
 	update(t){
     this.bird.time += 0.01;
+    this.bird.speedFactor = this.speedFactor;
+    this.bird.updateVelocity();
     this.bird.updatePosition();
     this.checkKeys();
     //console.log("orientation " + this.bird.orientation+ " velocity " +this.bird.velocity + " position " + this.bird.position);

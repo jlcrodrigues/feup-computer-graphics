@@ -25,8 +25,10 @@ export class MyBird extends CGFobject {
         this.rightBirdWing = new MyBirdWing(this.scene);
         this.time = 0;
         this.orientation = orientation; //in degrees 0 means pointing to the positive z axis
-        this.velocity = velocity;
+        this.rawVelocity = velocity;
         this.position = position;
+        this.speedFactor = 1;
+        this.velocity = this.rawVelocity * this.speedFactor;
         
         this.initMaterials();
     }
@@ -45,15 +47,19 @@ export class MyBird extends CGFobject {
         this.position[0] += this.velocity * Math.sin(this.orientation * Math.PI/180);
     }
 
+    updateVelocity(){
+        this.velocity = this.rawVelocity * this.speedFactor;
+    }
+
     accelerate(v){
-        if(this.velocity+v > 0 && this.velocity+v < 1.25){
-            this.velocity += v;   
+        if(this.rawVelocity+v > 0 && this.rawVelocity+v < 1.25){
+            this.rawVelocity += v;   
         }
-        else if (this.velocity+v <= 0){
-            this.velocity = 0;
+        else if (this.rawVelocity+v <= 0){
+            this.rawVelocity = 0;
         }
         else {
-            this.velocity = 1.25;
+            this.rawVelocity = 1.25;
         }        
     }
 
@@ -63,7 +69,7 @@ export class MyBird extends CGFobject {
 
     reset(){
         this.orientation = 0;
-        this.velocity = 0;
+        this.rawVelocity = 0;
         this.position = [0,3,0];
     }
 

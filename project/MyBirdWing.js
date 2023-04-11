@@ -16,7 +16,7 @@ export class MyBirdWing extends CGFobject {
         this.time = 0;
     }
 
-    display(t){
+    display(t,v=1){
 
         this.materials.setAmbient(0.0, 0.5, 1.0, 1.0);
         this.materials.setDiffuse(0.0, 0.5, 1.0, 1.0);
@@ -26,15 +26,15 @@ export class MyBirdWing extends CGFobject {
 
         //wing 1st part
         this.scene.pushMatrix();
-        this.scene.rotate(-(Math.PI/6)*Math.sin(t*5),0,0,1);
+        this.scene.rotate(-(Math.PI/6)*Math.sin(t*10*v),0,0,1);
         this.scene.scale(1.2,0.1,1);
         this.cube.display();
         this.scene.popMatrix();
 
         //wing 2nd part
         this.scene.pushMatrix();
-        this.scene.translate(1.1-Math.abs(Math.sin(t*5))*0.35,0.05-Math.sin(t*5)*0.705,0);
-        this.scene.rotate(-(Math.PI/3)*Math.sin(t*5),0,0,1);
+        this.scene.translate(1.1-Math.abs(Math.sin(t*10*v))*0.35,0.05-Math.sin(t*10*v)*0.705,0);
+        this.scene.rotate(-(Math.PI/3)*Math.sin(t*10*v),0,0,1);
         this.scene.rotate(-Math.PI/2,0,0,1);
         this.scene.rotate(Math.PI/2,0,1,0);
         this.scene.scale(0.595,1,0.1);

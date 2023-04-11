@@ -27,7 +27,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.bird = new MyBird(this);
+    this.bird = new MyBird(this,0,0,[0,0,0]);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -42,7 +42,7 @@ export class MyScene extends CGFscene {
 
     // set the scene update period 
 		// (to invoke the update() method every 50ms or as close as possible to that )
-		this.setUpdatePeriod(50);
+		this.setUpdatePeriod(10);
 
   }
   initLights() {
@@ -66,10 +66,39 @@ export class MyScene extends CGFscene {
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+
+  checkKeys() {
+    var text="Keys pressed: ";
+    var keysPressed=false;
+    // Check for key codes e.g. in https://keycode.info/
+    if (this.gui.isKeyPressed("KeyW"))
+        this.bird.accelerate(0.01);           
+
+    if (this.gui.isKeyPressed("KeyS"))
+        this.bird.accelerate(-0.01);
+
+    if (this.gui.isKeyPressed("KeyA"))
+        this.bird.turn(2.5);
+
+    if (this.gui.isKeyPressed("KeyD"))
+        this.bird.turn(-2.5);
+        
+    if (this.gui.isKeyPressed("KeyR"))
+        this.bird.reset();   
+
+    if (keysPressed)
+      console.log(text);
+  }
+
   // called periodically (as per setUpdatePeriod() in init())
 	update(t){
-    this.bird.time += 0.05;
+    this.bird.time += 0.01;
+    this.bird.updatePosition();
+    this.checkKeys();
+    console.log("orientation " + this.bird.orientation+ " velocity " +this.bird.velocity + " position " + this.bird.position);
+
   }
+
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -95,10 +124,9 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.pushMatrix();
-    //this.scale(2,2,2);
+    this.scale(0.6,0.6,0.6);
     this.bird.display();
     this.popMatrix();
-
 
     // ---- END Primitive drawing section
   }

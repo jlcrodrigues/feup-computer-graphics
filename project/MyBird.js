@@ -13,7 +13,7 @@ import { MyBirdWing } from './MyBirdWing.js';
  * @param scene - Reference to MyScene object
  */
 export class MyBird extends CGFobject {
-	constructor(scene) {
+	constructor(scene,orientation,velocity,position) {
 		super(scene);
         this.cube = new MyUnitCube(this.scene);
         this.cone = new MyCone(this.scene, 8, 1);
@@ -24,6 +24,9 @@ export class MyBird extends CGFobject {
         this.leftBirdWing = new MyBirdWing(this.scene);
         this.rightBirdWing = new MyBirdWing(this.scene);
         this.time = 0;
+        this.orientation = orientation; //in degrees 0 means pointing to the positive z axis
+        this.velocity = velocity;
+        this.position = position;
         
         this.initMaterials();
     }
@@ -37,18 +40,50 @@ export class MyBird extends CGFobject {
         this.materials.setShininess(10.0);
 	}
 
+    updatePosition(){
+        this.position[2] += this.velocity * Math.cos(this.orientation * Math.PI/180);
+        this.position[0] += this.velocity * Math.sin(this.orientation * Math.PI/180);
+    }
+
+    accelerate(v){
+        if(this.velocity+v > 0 && this.velocity+v < 2.0){
+            this.velocity += v;   
+        }
+        else if (this.velocity+v <= 0){
+            this.velocity = 0;
+        }
+        else {
+            this.velocity = 2;
+        }        
+    }
+
+    turn(v){
+        this.orientation += v;
+    }
+
+    reset(){
+        this.orientation = 0;
+        this.velocity = 0;
+        this.position = [0,0,0];
+    }
+
     display(){
+
+        this.scene.pushMatrix();
+        this.scene.translate(this.position[0],this.position[1],this.position[2]);
+        this.scene.rotate(this.orientation * Math.PI/180,0,1,0);
+
 
         //head
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*5)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
         this.scene.scale(0.8,0.8,0.8);
         this.birdHead.display();
         this.scene.popMatrix();
 
         //body
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*5)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
         this.scene.translate(0,-0.4,-1.5);
         this.scene.rotate(-Math.PI/8,1,0,0);
         this.birdBody.display();
@@ -56,17 +91,19 @@ export class MyBird extends CGFobject {
 
         // left wing
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*5)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
         this.scene.translate(1.2,-0.75,-1.3);
         this.leftBirdWing.display(this.time);
         this.scene.popMatrix();
 
         // right wing
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*5)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
         this.scene.translate(-1.2,-0.75,-1.3);
         this.scene.rotate(Math.PI,0,1,0);
         this.rightBirdWing.display(this.time);
+        this.scene.popMatrix();
+
         this.scene.popMatrix();
 
     }

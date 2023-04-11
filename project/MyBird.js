@@ -46,14 +46,14 @@ export class MyBird extends CGFobject {
     }
 
     accelerate(v){
-        if(this.velocity+v > 0 && this.velocity+v < 2.0){
+        if(this.velocity+v > 0.15 && this.velocity+v < 1.25){
             this.velocity += v;   
         }
-        else if (this.velocity+v <= 0){
-            this.velocity = 0;
+        else if (this.velocity+v <= 0.15){
+            this.velocity = 0.15;
         }
         else {
-            this.velocity = 2;
+            this.velocity = 1.25;
         }        
     }
 
@@ -63,8 +63,8 @@ export class MyBird extends CGFobject {
 
     reset(){
         this.orientation = 0;
-        this.velocity = 0;
-        this.position = [0,0,0];
+        this.velocity = 0.15;
+        this.position = [0,3,0];
     }
 
     display(){
@@ -76,14 +76,14 @@ export class MyBird extends CGFobject {
 
         //head
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
         this.scene.scale(0.8,0.8,0.8);
         this.birdHead.display();
         this.scene.popMatrix();
 
         //body
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
         this.scene.translate(0,-0.4,-1.5);
         this.scene.rotate(-Math.PI/8,1,0,0);
         this.birdBody.display();
@@ -91,17 +91,17 @@ export class MyBird extends CGFobject {
 
         // left wing
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
         this.scene.translate(1.2,-0.75,-1.3);
-        this.leftBirdWing.display(this.time);
+        this.leftBirdWing.display(this.time,this.velocity);
         this.scene.popMatrix();
 
         // right wing
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10)*0.3,0);
+        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
         this.scene.translate(-1.2,-0.75,-1.3);
         this.scene.rotate(Math.PI,0,1,0);
-        this.rightBirdWing.display(this.time);
+        this.rightBirdWing.display(this.time,this.velocity);
         this.scene.popMatrix();
 
         this.scene.popMatrix();

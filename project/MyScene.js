@@ -35,10 +35,14 @@ export class MyScene extends CGFscene {
 
     this.enableTextures(true);
 
-this.texture = new CGFtexture(this, "images/terrain.jpg");
-this.appearance = new CGFappearance(this);
-this.appearance.setTexture(this.texture);
-this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
+    // set the scene update period 
+		// (to invoke the update() method every 50ms or as close as possible to that )
+		this.setUpdatePeriod(50);
 
   }
   initLights() {
@@ -52,7 +56,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
       1.0,
       0.1,
       1000,
-      vec3.fromValues(10, 10, 15),
+      vec3.fromValues(5, 5, 5),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -61,6 +65,10 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
+  }
+  // called periodically (as per setUpdatePeriod() in init())
+	update(t){
+    this.bird.time += 0.05;
   }
   display() {
     // ---- BEGIN Background, camera and axis setup
@@ -87,7 +95,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.popMatrix();
 
     this.pushMatrix();
-    this.scale(2,2,2);
+    //this.scale(2,2,2);
     this.bird.display();
     this.popMatrix();
 

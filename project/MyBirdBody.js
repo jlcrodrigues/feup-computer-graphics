@@ -33,14 +33,14 @@ export class MyBirdBody extends CGFobject {
 
         // middle of body
         this.scene.pushMatrix();
-        this.scene.scale(1,0.8,1.3);
+        this.scene.scale(1,0.95,1.3);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
         this.cilinder.display();
         this.scene.popMatrix();
         
         // bottom of body
         this.scene.pushMatrix();
-        this.scene.translate(0,-0.8,0);
+        this.scene.translate(0,-0.95,0);
         this.scene.scale(1,0.5,1.3);
         this.scene.rotate(Math.PI, 1, 0, 0);
         this.cone.display();

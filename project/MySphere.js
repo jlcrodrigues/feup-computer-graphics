@@ -1,4 +1,4 @@
-import { CGFobject } from '../lib/CGF.js';
+import { CGFobject, CGFappearance, CGFtexture } from '../lib/CGF.js';
 
 /**
  * MyCilinder
@@ -15,42 +15,57 @@ export class MySphere extends CGFobject {
         this.radius = radius;
 
         this.initBuffers()
+        this.initMaterials()
 	}
+
+    initMaterials() {
+        this.sphereTexture = new CGFtexture(this.scene, "images/earth.jpg");
+        this.sphereMaterial = new CGFappearance(this.scene);
+        this.sphereMaterial.setTexture(this.sphereTexture);
+        this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        this.sphereMaterial.setAmbient(1, 1, 1, 1.0)
+        this.sphereMaterial.setDiffuse(1, 1, 1, 1.0)
+    }
 
 	initBuffers() {
         this.vertices = [];
         this.indices = [];
+        this.normals = [];
         this.texCoords = [];
 
         for (let i = 0; i < this.stacks + 1; i++) {
             let latitude = - Math.PI / 2 + i * Math.PI / this.stacks;
             let cos_lat = Math.cos(latitude)
             let sin_lat = Math.sin(latitude)
-            for (let j = 0; j < this.slices; j++) {
+            for (let j = 0; j < this.slices + 1; j++) {
                 let longitude = j * 2 * Math.PI / this.slices;
-                this.vertices.push(this.radius * cos_lat * Math.cos(longitude))
-                this.vertices.push(this.radius * sin_lat)
-                this.vertices.push(this.radius * cos_lat * Math.sin(longitude))
+                let x = this.radius * cos_lat * Math.cos(longitude)
+                let y = this.radius * sin_lat
+                let z = this.radius * cos_lat * Math.sin(longitude)
+
+                this.vertices.push(x)
+                this.vertices.push(y)
+                this.vertices.push(z)
+
+                this.texCoords.push(1 - j / this.slices, 1 - i / this.stacks)
+                this.normals.push(x, y, z) 
 
                 if (i > 0 && j > 0) {
-                    let cur = i * this.slices + j;
-                    // cur - 1  ; cur
-                    // cur - slices - 1; cur - slices
-                    this.indices.push(cur - this.slices - 1, cur - this.slices, cur);
-                    this.indices.push(cur - this.slices - 1, cur, cur - 1);
+                    let cur = this.vertices.length / 3 - 1;
+                    this.indices.push(cur - 1, cur - this.slices - 1, cur - this.slices - 2);
+                    this.indices.push(cur - 1, cur, cur - this.slices - 1);
+
                 }
-            }
-            let last = (i + 1) * this.slices - 1
-            // last slice 
-            // last ; last - slices + 1
-            // last - slices; last - 2 * slices + 1
-            if (i > 0) {
-                this.indices.push(last - this.slices, last - 2 * this.slices + 1, last - this.slices + 1);
-                this.indices.push(last - this.slices, last - this.slices + 1, last);
             }
         }
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	}
+
+    display() {
+        this.sphereMaterial.apply();
+        super.display();
+    }
+
 }

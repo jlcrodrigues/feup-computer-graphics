@@ -8,15 +8,16 @@ import { CGFobject, CGFappearance, CGFtexture } from '../lib/CGF.js';
  * @param stacks - Number of stacks (andares) of the sphere
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, radius = 1) {
-		super(scene);
-		this.slices = slices;
-		this.stacks = stacks;
+    constructor(scene, slices, stacks, radius = 1, inverse = false) {
+        super(scene);
+        this.slices = slices;
+        this.stacks = stacks;
         this.radius = radius;
+        this.inverse = inverse;
 
         this.initBuffers()
         this.initMaterials()
-	}
+    }
 
     initMaterials() {
         this.sphereTexture = new CGFtexture(this.scene, "images/earth.jpg");
@@ -24,10 +25,9 @@ export class MySphere extends CGFobject {
         this.sphereMaterial.setTexture(this.sphereTexture);
         this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
         this.sphereMaterial.setAmbient(1, 1, 1, 1.0)
-        this.sphereMaterial.setDiffuse(1, 1, 1, 1.0)
     }
 
-	initBuffers() {
+    initBuffers() {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
@@ -43,25 +43,42 @@ export class MySphere extends CGFobject {
                 let y = this.radius * sin_lat
                 let z = this.radius * cos_lat * Math.sin(longitude)
 
-                this.vertices.push(x)
-                this.vertices.push(y)
-                this.vertices.push(z)
+                this.vertices.push(x + this.scene.camera.position[0])
+                this.vertices.push(y + this.scene.camera.position[1])
+                this.vertices.push(z + this.scene.camera.position[2])
 
                 this.texCoords.push(1 - j / this.slices, 1 - i / this.stacks)
-                this.normals.push(x, y, z) 
+                if (this.inverse) {
+                    this.normals.push(-x, -y, -z)
+                }
+                else {
+                    this.normals.push(x, y, z)
+                }
 
                 if (i > 0 && j > 0) {
                     let cur = this.vertices.length / 3 - 1;
-                    this.indices.push(cur - 1, cur - this.slices - 1, cur - this.slices - 2);
-                    this.indices.push(cur - 1, cur, cur - this.slices - 1);
-
+                    if (this.inverse) {
+                        this.indices.push(cur - this.slices - 2, cur - this.slices - 1, cur - 1);
+                        this.indices.push(cur - this.slices - 1, cur, cur - 1);
+                    }
+                    else {
+                        this.indices.push(cur - 1, cur - this.slices - 1, cur - this.slices - 2);
+                        this.indices.push(cur - 1, cur, cur - this.slices - 1);
+                    }
                 }
             }
         }
 
-		this.primitiveType = this.scene.gl.TRIANGLES;
-		this.initGLBuffers();
-	}
+        this.primitiveType = this.scene.gl.TRIANGLES;
+        this.initGLBuffers();
+    }
+
+    setTexture(texture) {
+        this.sphereMaterial = new CGFappearance(this.scene);
+        this.sphereMaterial.setTexture(texture);
+        this.sphereMaterial.setTextureWrap('REPEAT', 'REPEAT');
+        this.sphereMaterial.setAmbient(1, 1, 1, 1.0)
+    }
 
     display() {
         this.sphereMaterial.apply();

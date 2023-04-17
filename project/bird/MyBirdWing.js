@@ -1,4 +1,4 @@
-import {CGFobject,CGFappearance} from '../../lib/CGF.js';
+import {CGFobject,CGFappearance,CGFtexture} from '../../lib/CGF.js';
 import { MyCilinder } from '../shapes/MyCilinder.js';
 import { MyUnitCube } from '../shapes/MyUnitCube.js';
 
@@ -13,20 +13,24 @@ export class MyBirdWing extends CGFobject {
         this.cube = new MyUnitCube(this.scene);
         this.cilinder = new MyCilinder(this.scene, 3, 1);
         this.materials = new CGFappearance(this.scene);
+        this.wingTexture = new CGFtexture(this.scene,'./images/texture.jpg');
+        this.materials.setAmbient(1.0, 1.0, 1,0, 1.0);
+        this.materials.setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.materials.setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.materials.setShininess(20.0);
+        this.materials.setTexture(this.wingTexture);
     }
 
     display(t,v){
 
-        this.materials.setAmbient(0.0, 0.5, 1.0, 1.0);
-        this.materials.setDiffuse(0.0, 0.5, 1.0, 1.0);
-        this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
-        this.materials.setShininess(10.0);
+
         this.materials.apply();
 
         //wing 1st part
         this.scene.pushMatrix();
         this.scene.rotate(-(Math.PI/6)*Math.sin(t*10*(v+0.5)),0,0,1);
         this.scene.scale(1.2,0.1,1);
+        this.scene.rotate(Math.PI/2,0,1,0);
         this.cube.display();
         this.scene.popMatrix();
 

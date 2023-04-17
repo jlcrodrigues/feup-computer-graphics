@@ -1,4 +1,4 @@
-import {CGFobject,CGFappearance} from '../../lib/CGF.js';
+import {CGFobject,CGFappearance,CGFtexture} from '../../lib/CGF.js';
 import { MyCone } from '../shapes/MyCone.js';
 import { MyPyramid } from '../shapes/MyPyramid.js';
 import { MyCilinder } from '../shapes/MyCilinder.js';
@@ -14,19 +14,21 @@ export class MyBirdHead extends CGFobject {
 		super(scene);
         this.cone = new MyCone(this.scene, 4, 1);
         this.pyramid = new MyPyramid(this.scene, 4, 1);
-        this.cilinder = new MyCilinder(this.scene, 4, 1);
+        this.cilinder = new MyCilinder(this.scene, 4, 20);
         this.cube = new MyUnitCube(this.scene);
         this.materials = new CGFappearance(this.scene);
+        this.headTexture = new CGFtexture(this.scene,'./images/texture.jpg');
+        this.materials.setAmbient(1.0, 1.0, 1,0, 1.0);
+        this.materials.setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.materials.setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.materials.setShininess(20.0);
+        this.materials.setTexture(this.headTexture);
     }
 
     display(){
 
-        this.materials.setAmbient(0.0, 0.5, 1.0, 1.0);
-        this.materials.setDiffuse(0.0, 0.5, 1.0, 1.0);
-        this.materials.setSpecular(0.0, 0.5, 1.0, 1.0);
-        this.materials.setShininess(10.0);
         this.materials.apply();
-
+        
         //top of head
         this.scene.pushMatrix();
         this.scene.scale(1,0.5,1);
@@ -53,23 +55,15 @@ export class MyBirdHead extends CGFobject {
 
         //yellow beak
         this.scene.pushMatrix();
-        this.materials.setAmbient(1.0, 1.0, 0.0, 1.0);
-        this.materials.setDiffuse(1.0, 1.0, 0.0, 1.0);
-        this.materials.setSpecular(1.0, 1.0, 0.0, 1.0);
-        this.materials.setShininess(10.0);
         this.materials.apply();
         this.scene.translate(0,-0.3,0.65);
         this.scene.scale(0.25,0.25,0.4);
         this.scene.rotate(Math.PI/2,1,0,0);
-        this.pyramid.display();
+        this.cone.display();
         this.scene.popMatrix();
 
         //red right eye
         this.scene.pushMatrix();
-        this.materials.setAmbient(1.0, 0.0, 0.0, 1.0);
-        this.materials.setDiffuse(1.0, 0.0, 0.0, 1.0);
-        this.materials.setSpecular(1.0, 0.0, 0.0, 1.0);
-        this.materials.setShininess(10.0);
         this.materials.apply();
         this.scene.translate(0.6,0,0.6);
         this.scene.scale(0.27,0.27,0.27);
@@ -78,10 +72,6 @@ export class MyBirdHead extends CGFobject {
 
         //red left eye
         this.scene.pushMatrix();
-        this.materials.setAmbient(1.0, 0.0, 0.0, 1.0);
-        this.materials.setDiffuse(1.0, 0.0, 0.0, 1.0);
-        this.materials.setSpecular(1.0, 0.0, 0.0, 1.0);
-        this.materials.setShininess(10.0);
         this.materials.apply();
         this.scene.translate(-0.6,0,0.6);
         this.scene.scale(0.27,0.27,0.27);

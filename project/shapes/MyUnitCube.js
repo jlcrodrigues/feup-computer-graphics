@@ -121,7 +121,44 @@ export class MyUnitCube extends CGFobject {
 			0, -1, 0,
 			0, -1, 0
 		];
+		
+		this.texCoords = [
+			// front
+			0, 0,
+			1, 0,
+			1, 1,
+			0, 1,
 
+			// back
+			1, 0,
+			0, 0,
+			0, 1,
+			1, 1,
+
+			// right
+			0, 0,
+			1, 0,
+			1, 1,
+			0, 1,
+
+			// left
+			1, 0,
+			0, 0,
+			0, 1,
+			1, 1,
+
+			// top
+			0, 0,
+			1, 0,
+			1, 1,
+			0, 1,
+
+			// bottom
+			0, 1,
+			1, 1,
+			1, 0,
+			0, 0
+		];
 
 
 		//The defined indices (and corresponding vertices)

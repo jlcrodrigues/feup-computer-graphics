@@ -13,7 +13,7 @@ export class MyBirdWing extends CGFobject {
         this.cube = new MyUnitCube(this.scene);
         this.cilinder = new MyCilinder(this.scene, 3, 1);
         this.materials = new CGFappearance(this.scene);
-        this.wingTexture = new CGFtexture(this.scene,'./images/texture.jpg');
+        this.wingTexture = new CGFtexture(this.scene,'./images/wing.jpg');
         this.materials.setAmbient(1.0, 1.0, 1,0, 1.0);
         this.materials.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.materials.setSpecular(1.0, 1.0, 1.0, 1.0);

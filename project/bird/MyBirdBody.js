@@ -12,6 +12,7 @@ export class MyBirdBody extends CGFobject {
 	constructor(scene) {
 		super(scene);
         this.cone = new MyCone(this.scene, 6, 1);
+        this.tail = new MyCone(this.scene, 4, 1);
         this.pyramid = new MyPyramid(this.scene, 4, 1);
         this.cilinder = new MyCilinder(this.scene, 6, 1);
         this.materials = new CGFappearance(this.scene);
@@ -50,11 +51,11 @@ export class MyBirdBody extends CGFobject {
 
         //tail
         this.scene.pushMatrix();
-        this.scene.translate(0,-0.4,-1.12);
-        this.scene.scale(0.72,0.57,0.7);
+        this.scene.translate(0,-0.48,-1.12);
+        this.scene.scale(0.72,0.67,0.72);
         this.scene.rotate(-Math.PI/2,1,0,0);
         this.scene.rotate(Math.PI/4,0,1,0);
-        this.pyramid.display();
+        this.tail.display();
         this.scene.popMatrix();
 
     }

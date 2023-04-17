@@ -1,6 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
-import { MyPlane } from "./MyPlane.js";
-import { MyBird } from "./MyBird.js";
+import { MyPlane } from "./shapes/MyPlane.js";
+import { MyBird } from "./bird/MyBird.js"
 
 /**
  * MyScene

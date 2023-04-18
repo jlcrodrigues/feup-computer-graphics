@@ -1,7 +1,4 @@
 import {CGFobject,CGFappearance} from '../../lib/CGF.js';
-import { MyUnitCube } from '../shapes/MyUnitCube.js';
-import { MyCone } from '../shapes/MyCone.js';
-import { MyCilinder } from '../shapes/MyCilinder.js';
 import { MyBirdHead } from './MyBirdHead.js';
 import { MyBirdBody } from './MyBirdBody.js';
 import { MyBirdWing } from './MyBirdWing.js';

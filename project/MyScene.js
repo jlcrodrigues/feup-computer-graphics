@@ -83,7 +83,7 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
 
     //this.sphereMaterial.apply();
-    this.panorama.display();
+    this.panorama.display(this.camera.position);
     
     this.pushMatrix();
     this.appearance.apply();

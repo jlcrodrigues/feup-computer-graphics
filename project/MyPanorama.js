@@ -17,8 +17,12 @@ export class MyPanorama extends CGFobject {
         this.texture = texture;
 	}
 
-    display() {
+    display(position) {
+        this.scene.pushMatrix()
+        this.scene.translate(...position);
         this.sphere.display();
+        this.scene.popMatrix();
+
     }
 
 }

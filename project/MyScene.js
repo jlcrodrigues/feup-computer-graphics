@@ -80,12 +80,17 @@ export class MyScene extends CGFscene {
 
     if (this.gui.isKeyPressed("KeyA"))
         this.bird.turn(2.5);
+    else if (this.bird.tiltAngle < 0)
+        this.bird.tilt(2.5);
 
     if (this.gui.isKeyPressed("KeyD"))
         this.bird.turn(-2.5);
+    else if (this.bird.tiltAngle > 0)
+        this.bird.tilt(-2.5);
         
     if (this.gui.isKeyPressed("KeyR"))
-        this.bird.reset();   
+        this.bird.reset(); 
+        
 
     if (keysPressed)
       console.log(text);
@@ -98,7 +103,9 @@ export class MyScene extends CGFscene {
     this.bird.updateVelocity();
     this.bird.updatePosition();
     this.checkKeys();
-    //console.log("orientation " + this.bird.orientation+ " velocity " +this.bird.velocity + " position " + this.bird.position);
+    //print bird variables
+    //console.log("Bird orientation: " + this.bird.orientation);
+    //console.log("Bird tilt angle: " + this.bird.tiltAngle); 
   }
 
   display() {
@@ -129,6 +136,7 @@ export class MyScene extends CGFscene {
     this.translate(this.bird.position[0],this.bird.position[1],this.bird.position[2]);
     this.scale(0.6*this.scaleFactor,0.6*this.scaleFactor,0.6*this.scaleFactor);
     this.rotate(this.bird.orientation * Math.PI/180,0,1,0);
+    this.rotate(this.bird.tiltAngle * Math.PI/180,0,0,1)
     this.bird.display();
     this.popMatrix();
 

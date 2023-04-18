@@ -27,6 +27,7 @@ export class MyBird extends CGFobject {
         this.orientation = orientation; //in degrees 0 means pointing to the positive z axis
         this.rawVelocity = velocity;
         this.position = position;
+        this.tiltAngle = 0;
         this.speedFactor = 1;
         this.velocity = this.rawVelocity * this.speedFactor;
         
@@ -65,11 +66,25 @@ export class MyBird extends CGFobject {
 
     turn(v){
         this.orientation += v;
+        this.tilt(-v);
+
+    }
+
+    tilt(a){
+        // cap tilt angle to 60 degrees
+        this.tiltAngle += a;
+        if(this.tiltAngle > 60){
+            this.tiltAngle = 60;
+        }
+        else if(this.tiltAngle < -60){
+            this.tiltAngle = -60;
+        }
     }
 
     reset(){
         this.orientation = 0;
         this.rawVelocity = 0;
+        this.tiltAngle  = 0;
         this.position = [0,3,0];
     }
 

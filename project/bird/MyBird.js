@@ -30,6 +30,10 @@ export class MyBird extends CGFobject {
         this.tiltAngle = 0;
         this.speedFactor = 1;
         this.velocity = this.rawVelocity * this.speedFactor;
+        this.wingAngle1 = 0;
+        this.wingAngle2 = 0;
+        this.wingUp1 = true;
+        this.wingUp2 = true;
         
         this.initMaterials();
     }
@@ -44,23 +48,55 @@ export class MyBird extends CGFobject {
 	}
 
     updatePosition(){
-        this.position[2] += this.velocity * Math.cos(this.orientation * Math.PI/180);
-        this.position[0] += this.velocity * Math.sin(this.orientation * Math.PI/180);
+        this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180);
+        this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180);
     }
 
     updateVelocity(){
         this.velocity = this.rawVelocity * this.speedFactor;
     }
 
+    updateWingAngle(){
+
+        if (this.wingUp1){
+            this.wingAngle1 += 0.01 * 140*Math.PI/180 * (this.velocity + 1);
+            if(this.wingAngle1 >= 35*Math.PI/180){
+                this.wingAngle1 = 35*Math.PI/180;
+                this.wingUp1 = false;
+            }
+        }
+        else{
+            this.wingAngle1 -= 0.01 * 140*Math.PI/180* (this.velocity + 1);
+            if(this.wingAngle1 <= -35*Math.PI/180){
+                this.wingAngle1 = -35*Math.PI/180;
+                this.wingUp1 = true;
+            }
+        }
+        if (this.wingUp2){
+            this.wingAngle2 += 0.01 * 280*Math.PI/180 * (this.velocity + 1);
+            if(this.wingAngle2 >= 70*Math.PI/180){
+                this.wingAngle2 = 70*Math.PI/180;
+                this.wingUp2 = false;
+            }
+        }
+        else{
+            this.wingAngle2 -= 0.01 * 280*Math.PI/180* (this.velocity + 1);
+            if(this.wingAngle2 <= -70*Math.PI/180){
+                this.wingAngle2 = -70*Math.PI/180;
+                this.wingUp2 = true;
+            }
+        }
+    }
+
     accelerate(v){
-        if(this.rawVelocity+v > 0 && this.rawVelocity+v < 1.25){
+        if(this.rawVelocity+v > 0 && this.rawVelocity+v < 2){
             this.rawVelocity += v;   
         }
         else if (this.rawVelocity+v <= 0){
             this.rawVelocity = 0;
         }
         else {
-            this.rawVelocity = 1.25;
+            this.rawVelocity = 2;
         }        
     }
 
@@ -85,6 +121,10 @@ export class MyBird extends CGFobject {
         this.orientation = 0;
         this.rawVelocity = 0;
         this.tiltAngle  = 0;
+        this.wingAngle1 = 0;
+        this.wingAngle2 = 0;
+        this.wingUp1 = true;
+        this.wingUp2 = true;
         this.position = [0,3,0];
     }
 
@@ -92,32 +132,32 @@ export class MyBird extends CGFobject {
 
         //head
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
-        this.scene.scale(0.8,0.8,0.8);
+        this.scene.translate(0,-Math.sin(this.wingAngle2)*0.3,0);
+        this.scene.scale(0.5,0.5,0.4);
         this.birdHead.display();
         this.scene.popMatrix();
 
         //body
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
-        this.scene.translate(0,-0.4,-1.5);
+        this.scene.translate(0,-Math.sin(this.wingAngle2)*0.3,0);
+        this.scene.translate(0,-0.4,-1.3);
         this.scene.rotate(-Math.PI/8,1,0,0);
         this.birdBody.display();
         this.scene.popMatrix();
 
         // left wing
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
-        this.scene.translate(1.2,-0.75,-1.3);
-        this.leftBirdWing.display(this.time,this.velocity);
+        this.scene.translate(0,-Math.sin(this.wingAngle2)*0.3,0);
+        this.scene.translate(0.7,-0.7,-1.3);
+        this.leftBirdWing.display(this.wingAngle1,this.wingAngle2);
         this.scene.popMatrix();
 
         // right wing
         this.scene.pushMatrix();
-        this.scene.translate(0,Math.sin(this.time*10*(this.velocity+0.5))*0.3,0);
-        this.scene.translate(-1.2,-0.75,-1.3);
+        this.scene.translate(0,-Math.sin(this.wingAngle2)*0.3,0);
+        this.scene.translate(-0.7,-0.7,-1.3);
         this.scene.rotate(Math.PI,0,1,0);
-        this.rightBirdWing.display(this.time,this.velocity);
+        this.rightBirdWing.display(this.wingAngle1,this.wingAngle2);
         this.scene.popMatrix();
 
     }

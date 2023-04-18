@@ -57,7 +57,7 @@ export class MyScene extends CGFscene {
       1.0,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
+      vec3.fromValues(15, 5, 5),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -98,14 +98,12 @@ export class MyScene extends CGFscene {
 
   // called periodically (as per setUpdatePeriod() in init())
 	update(t){
-    this.bird.time += 0.01;
+    this.bird.time = this.bird.time + 0.01;
     this.bird.speedFactor = this.speedFactor;
     this.bird.updateVelocity();
     this.bird.updatePosition();
+    this.bird.updateWingAngle();
     this.checkKeys();
-    //print bird variables
-    //console.log("Bird orientation: " + this.bird.orientation);
-    //console.log("Bird tilt angle: " + this.bird.tiltAngle); 
   }
 
   display() {

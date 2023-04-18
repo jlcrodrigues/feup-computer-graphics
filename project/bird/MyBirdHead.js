@@ -3,6 +3,7 @@ import { MyCone } from '../shapes/MyCone.js';
 import { MyPyramid } from '../shapes/MyPyramid.js';
 import { MyCilinder } from '../shapes/MyCilinder.js';
 import { MyUnitCube } from '../shapes/MyUnitCube.js';
+import { MySphere } from '../shapes/MySphere.js';
 
 /**
  * MyBirdHead
@@ -16,6 +17,7 @@ export class MyBirdHead extends CGFobject {
         this.pyramid = new MyPyramid(this.scene, 4, 1);
         this.cilinder = new MyCilinder(this.scene, 4, 20);
         this.cube = new MyUnitCube(this.scene);
+        this.sphere = new MySphere(this.scene,20,20,0.5,false);
         this.materials = new CGFappearance(this.scene);
         this.headTexture = new CGFtexture(this.scene,'./images/head.png');
         this.beakTexture = new CGFtexture(this.scene,'./images/beak.png');
@@ -63,8 +65,8 @@ export class MyBirdHead extends CGFobject {
         this.scene.pushMatrix();
         this.materials.setTexture(this.beakTexture);
         this.materials.apply();
-        this.scene.translate(0,-0.3,0.65);
-        this.scene.scale(0.25,0.25,0.4);
+        this.scene.translate(0,-0.3,0.7);
+        this.scene.scale(0.25,0.25,0.8);
         this.scene.rotate(Math.PI/2,1,0,0);
         this.cone.display();
         this.scene.popMatrix();
@@ -73,16 +75,22 @@ export class MyBirdHead extends CGFobject {
         this.materials.apply();
         //right eye
         this.scene.pushMatrix();
-        this.scene.translate(0.6,0,0.6);
+        this.scene.translate(0.69,-0.05,0.6);
         this.scene.scale(0.27,0.27,0.27);
-        this.cube.display();
+        this.scene.rotate(Math.PI/8,0,0,1);
+        this.scene.rotate(4*Math.PI/8,0,1,0);
+        this.sphere.display();
         this.scene.popMatrix();
 
         //left eye
         this.scene.pushMatrix();
-        this.scene.translate(-0.6,0,0.6);
+        this.scene.rotate(Math.PI,0,0,1);
+        this.scene.translate(0.69,0.05,0.6);
         this.scene.scale(0.27,0.27,0.27);
-        this.cube.display();
+        this.scene.rotate(Math.PI,1,0,0);
+        this.scene.rotate(Math.PI/8,0,0,1);
+        this.scene.rotate(7*Math.PI/8,0,1,0);
+        this.sphere.display();
         this.scene.popMatrix();
 
     }

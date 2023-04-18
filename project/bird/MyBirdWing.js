@@ -21,26 +21,32 @@ export class MyBirdWing extends CGFobject {
         this.materials.setTexture(this.wingTexture);
     }
 
-    display(t,v){
+    display(a1,a2){
 
+        //console.log("t " + t + "v " + v)
+
+        //var angleWing1 = (35 * Math.PI/180) * -Math.sin(frequency);
+        //var angleWing2 = (70 * Math.PI/180) * -Math.sin(frequency);
 
         this.materials.apply();
 
         //wing 1st part
         this.scene.pushMatrix();
-        this.scene.rotate(-(Math.PI/6)*Math.sin(t*10*(v+0.5)),0,0,1);
-        this.scene.scale(1.2,0.1,1);
-        this.scene.rotate(Math.PI/2,0,1,0);
+        this.scene.rotate(a1,0,0,1);
+        this.scene.translate(0.5*1.2,0,0);
+        this.scene.scale(1.2,0.1,0.85);
         this.cube.display();
         this.scene.popMatrix();
 
         //wing 2nd part
         this.scene.pushMatrix();
-        this.scene.translate(1.1-Math.abs(Math.sin(t*10*(v+0.5)))*0.35,0.05-Math.sin(t*10*(v+0.5))*0.705,0);
-        this.scene.rotate(-(Math.PI/3)*Math.sin(t*10*(v+0.5)),0,0,1);
+        this.scene.translate(Math.cos(a1)*1.2,Math.sin(a1)*1.2,0)
+        this.scene.rotate(a2,0,0,1);
+        this.scene.scale(0.85,0.1,0.5);
         this.scene.rotate(-Math.PI/2,0,0,1);
-        this.scene.rotate(Math.PI/2,0,1,0);
-        this.scene.scale(0.595,1,0.1);
+        this.scene.translate(0,0,-0.85);
+        this.scene.rotate(-Math.PI/2,0,1,0);
+        this.scene.translate(0.85,0.5,-0.5);
         this.scene.rotate(-Math.PI/6,0,0,1);
         this.cilinder.display();
         this.scene.popMatrix();

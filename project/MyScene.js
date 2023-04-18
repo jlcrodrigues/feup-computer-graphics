@@ -57,7 +57,7 @@ export class MyScene extends CGFscene {
       1.0,
       0.1,
       1000,
-      vec3.fromValues(15, 5, 5),
+      vec3.fromValues(30, 15, 5),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -73,10 +73,10 @@ export class MyScene extends CGFscene {
     var keysPressed=false;
     // Check for key codes e.g. in https://keycode.info/
     if (this.gui.isKeyPressed("KeyW"))
-        this.bird.accelerate(0.01);           
+        this.bird.accelerate(0.015);           
 
     if (this.gui.isKeyPressed("KeyS"))
-        this.bird.accelerate(-0.01);
+        this.bird.accelerate(-0.015);
 
     if (this.gui.isKeyPressed("KeyA"))
         this.bird.turn(2.5);
@@ -101,7 +101,7 @@ export class MyScene extends CGFscene {
     this.bird.time = this.bird.time + 0.01;
     this.bird.speedFactor = this.speedFactor;
     this.bird.updateVelocity();
-    //this.bird.updatePosition();
+    this.bird.updatePosition();
     this.bird.updateWingAngle();
     this.checkKeys();
   }
@@ -136,7 +136,7 @@ export class MyScene extends CGFscene {
     this.rotate(this.bird.orientation * Math.PI/180,0,1,0);
     this.rotate(this.bird.tiltAngle * Math.PI/180,0,0,1);
     this.rotate(this.bird.fowardAngle,1,0,0);
-    this.rotate(- 40 * Math.PI/180,1,0,0);
+    this.rotate(- 50 * Math.PI/180,1,0,0);
     this.bird.display();
     this.popMatrix();
 

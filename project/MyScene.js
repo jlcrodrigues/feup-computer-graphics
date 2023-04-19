@@ -2,7 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
-import { MyEgg} from "./nest/MyEgg.js"
+import { MyEgg} from "./nest/MyBirdEgg.js"
 import { MyNest } from "./nest/MyNest.js"
 
 /**

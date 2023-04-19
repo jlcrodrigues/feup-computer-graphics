@@ -1,4 +1,4 @@
-import {CGFobject,CGFappearance} from '../../lib/CGF.js';
+import {CGFobject,CGFappearance, CGFtexture} from '../../lib/CGF.js';
 import { MyBirdHead } from './MyBirdHead.js';
 import { MyBirdBody } from './MyBirdBody.js';
 import { MyBirdWing } from './MyBirdWing.js';
@@ -125,14 +125,14 @@ export class MyBird extends CGFobject {
         this.wingAngle2 = 0;
         this.wingUp1 = true;
         this.wingUp2 = true;
-        this.position = [35,-50,50];
+        this.position = [35,-48,50];
     }
 
     display(){
 
         this.scene.pushMatrix();
         this.scene.translate(this.position[0],this.position[1],this.position[2]);
-        this.scene.scale(0.6*this.scene.scaleFactor,0.6*this.scene.scaleFactor,0.6*this.scene.scaleFactor);
+        this.scene.scale(0.7*this.scene.scaleFactor,0.7*this.scene.scaleFactor,0.7*this.scene.scaleFactor);
         this.scene.rotate(this.orientation * Math.PI/180,0,1,0);
         this.scene.rotate(this.tiltAngle * Math.PI/180,0,0,1);
         this.scene.rotate(this.fowardAngle,1,0,0);
@@ -169,7 +169,7 @@ export class MyBird extends CGFobject {
         this.rightBirdWing.display(this.wingAngle1,this.wingAngle2);
         this.scene.popMatrix();
 
-        this.popMatrix();
+        this.scene.popMatrix();
 
     }
 

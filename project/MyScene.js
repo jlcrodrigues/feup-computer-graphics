@@ -2,6 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
+import { MyEgg} from "./nest/MyEgg.js"
 
 /**
  * MyScenew
@@ -31,7 +32,11 @@ export class MyScene extends CGFscene {
     let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
 
-    this.bird = new MyBird(this,90,0,[35,-50,50]);
+    this.bird = new MyBird(this,90,0,[35,-48,50]);
+
+    // create a new array of eggs
+    this.eggs = new Array(5); 
+    this.spawnEggs();
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -64,8 +69,8 @@ export class MyScene extends CGFscene {
       0.9,
       0.1,
       1000,
-      vec3.fromValues(-20, -20, -5),
-      vec3.fromValues(50, -30, 25)
+      vec3.fromValues(-20, -15, -10),
+      vec3.fromValues(60, -30, 35)
     );
   }
   setDefaultAppearance() {
@@ -96,11 +101,31 @@ export class MyScene extends CGFscene {
         this.bird.tilt(-2.5);
         
     if (this.gui.isKeyPressed("KeyR"))
-        this.bird.reset(); 
+        this.reset(); 
         
     if (keysPressed)
       console.log(text);
   }
+
+  reset() {
+    this.bird.reset();
+
+    this.camera.position = vec3.fromValues(-20, -15, -10);
+    this.camera.target = vec3.fromValues(60, -30, 35);
+
+    this.spawnEggs();
+  }
+
+  spawnEggs() {
+    for (let i = 0; i < 5; i++) {
+      // generate random position x 60 a 100, y -54, z -20 a 50
+      let x = Math.random() * (100 - 60) + 60;
+      let y = -54;
+      let z = Math.random() * (50 - (-20)) + (-20);
+      this.eggs[i] = new MyEgg(this,0,0,[x,y,z]);
+    }
+  }
+
 
   // called periodically (as per setUpdatePeriod() in init())
 	update(t){
@@ -131,6 +156,8 @@ export class MyScene extends CGFscene {
     this.panorama.display(this.camera.position);
     this.terrain.display();
     this.bird.display();
+    for (let i = 0; i < 5; i++)
+      this.eggs[i].display();
 
     // ---- END Primitive drawing section
   }

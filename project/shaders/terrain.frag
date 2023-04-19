@@ -11,7 +11,10 @@ uniform sampler2D uSampler3;
 
 void main() {
 	vec4 colorTerrain = texture2D(uSampler, vTextureCoord);
-	vec4 colorAltimetry = texture2D(uSampler3, vec2(0, 1.0-blue));
+
+	float y = (1.0 - blue) * 1.25;
+	if (y >= 0.99) y = 0.99;
+	vec4 colorAltimetry = texture2D(uSampler3, vec2(0, y));
 	vec4 color = 0.7*colorTerrain + 0.3*colorAltimetry;
 	vec4 filter = texture2D(uSampler, vTextureCoord);
 	

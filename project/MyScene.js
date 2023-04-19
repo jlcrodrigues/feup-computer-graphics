@@ -1,9 +1,10 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
-import { MyTerrain } from "./MyTerrain.js";
+import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
+import { MyBird } from "./bird/MyBird.js"
 
 /**
- * MyScene
+ * MyScenew
  * @constructor
  */
 export class MyScene extends CGFscene {
@@ -23,13 +24,19 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
+
+    //Initialize scene objects
+    this.axis = new CGFaxis(this);
     
-    let panoramaTexture = new CGFtexture(this, "images/panorama4.jpg");
+    let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
+
+    this.bird = new MyBird(this,0,0,[0,3,0]);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
+    this.speedFactor = 1;
 
     this.enableTextures(true);
 
@@ -38,6 +45,12 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.terrain = new MyTerrain(this);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
+    // set the scene update period 
+		// (to invoke the update() method every 10ms or as close as possible to that )
+		this.setUpdatePeriod(10);
+
   }
 
   initLights() {
@@ -51,7 +64,7 @@ export class MyScene extends CGFscene {
       0.7,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
+      vec3.fromValues(30, 30, 10),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -61,6 +74,44 @@ export class MyScene extends CGFscene {
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+
+  checkKeys() {
+    var text="Keys pressed: ";
+    var keysPressed=false;
+    // Check for key codes e.g. in https://keycode.info/
+    if (this.gui.isKeyPressed("KeyW"))
+        this.bird.accelerate(0.015);           
+
+    if (this.gui.isKeyPressed("KeyS"))
+        this.bird.accelerate(-0.015);
+
+    if (this.gui.isKeyPressed("KeyA"))
+        this.bird.turn(2.5);
+    else if (this.bird.tiltAngle < 0)
+        this.bird.tilt(2.5);
+
+    if (this.gui.isKeyPressed("KeyD"))
+        this.bird.turn(-2.5);
+    else if (this.bird.tiltAngle > 0)
+        this.bird.tilt(-2.5);
+        
+    if (this.gui.isKeyPressed("KeyR"))
+        this.bird.reset(); 
+        
+    if (keysPressed)
+      console.log(text);
+  }
+
+  // called periodically (as per setUpdatePeriod() in init())
+	update(t){
+    this.bird.time = this.bird.time + 0.01;
+    this.bird.speedFactor = this.speedFactor;
+    this.bird.updateVelocity();
+    this.bird.updatePosition();
+    this.bird.updateWingAngle();
+    this.checkKeys();
+  }
+
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -77,9 +128,18 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    //this.panorama.display(this.camera.position);
+    this.panorama.display(this.camera.position);
     this.terrain.display();
     
+    this.pushMatrix();
+    this.translate(this.bird.position[0],this.bird.position[1],this.bird.position[2]);
+    this.scale(0.6*this.scaleFactor,0.6*this.scaleFactor,0.6*this.scaleFactor);
+    this.rotate(this.bird.orientation * Math.PI/180,0,1,0);
+    this.rotate(this.bird.tiltAngle * Math.PI/180,0,0,1);
+    this.rotate(this.bird.fowardAngle,1,0,0);
+    this.rotate(- 50 * Math.PI/180,1,0,0);
+    this.bird.display();
+    this.popMatrix();
 
     // ---- END Primitive drawing section
   }

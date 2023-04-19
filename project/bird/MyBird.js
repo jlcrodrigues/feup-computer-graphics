@@ -20,9 +20,9 @@ export class MyBird extends CGFobject {
         this.rawVelocity = velocity;
         this.position = position;
         this.tiltAngle = 0;
-        this.fowardAngle = this.velocity * 30 * Math.PI/180;
         this.speedFactor = 1;
         this.velocity = this.rawVelocity * this.speedFactor;
+        this.fowardAngle = this.velocity * 30 * Math.PI/180;
         this.wingAngle1 = 0;
         this.wingAngle2 = 0;
         this.wingUp1 = true;
@@ -53,7 +53,7 @@ export class MyBird extends CGFobject {
             this.rawVelocity -= 0.005;
         } 
         this.velocity = this.rawVelocity * this.speedFactor;
-        this.fowardAngle = this.velocity * 30 * Math.PI/180;
+        this.fowardAngle = this.rawVelocity * 30 * Math.PI/180;
     }
 
     updateWingAngle(){

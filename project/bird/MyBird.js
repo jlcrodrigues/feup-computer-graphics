@@ -41,8 +41,8 @@ export class MyBird extends CGFobject {
 	}
 
     updatePosition(){
-        this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180);
-        this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180);
+        this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180) * this.scene.scaleFactor;
+        this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
     }
 
     updateVelocity(){

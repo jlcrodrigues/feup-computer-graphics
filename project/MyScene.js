@@ -3,6 +3,7 @@ import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
 import { MyEgg} from "./nest/MyEgg.js"
+import { MyNest } from "./nest/MyNest.js"
 
 /**
  * MyScenew
@@ -37,6 +38,8 @@ export class MyScene extends CGFscene {
     // create a new array of eggs
     this.eggs = new Array(5); 
     this.spawnEggs();
+
+    this.nest = new MyNest(this,[60,-54,80]);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -120,7 +123,7 @@ export class MyScene extends CGFscene {
     for (let i = 0; i < 5; i++) {
       // generate random position x 60 a 100, y -54, z -20 a 50
       let x = Math.random() * (100 - 60) + 60;
-      let y = -54;
+      let y = -55;
       let z = Math.random() * (50 - (-20)) + (-20);
       this.eggs[i] = new MyEgg(this,0,0,[x,y,z]);
     }
@@ -156,6 +159,7 @@ export class MyScene extends CGFscene {
     this.panorama.display(this.camera.position);
     this.terrain.display();
     this.bird.display();
+    this.nest.display();
     for (let i = 0; i < 5; i++)
       this.eggs[i].display();
 

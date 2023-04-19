@@ -1,6 +1,5 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
-import { MyPlane } from "./MyPlane.js";
-import { MySphere } from "./MySphere.js";
+import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 
 /**
@@ -24,13 +23,8 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-
-    //Initialize scene objects
-    this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
-    this.sphere = new MySphere(this, 30, 30, 1);
     
-    let panoramaTexture = new CGFtexture(this, "images/panorama.jpg");
+    let panoramaTexture = new CGFtexture(this, "images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
 
     //Objects connected to MyInterface
@@ -39,10 +33,11 @@ export class MyScene extends CGFscene {
 
     this.enableTextures(true);
 
-    this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
+    //Initialize scene objects
+    this.axis = new CGFaxis(this);
+    this.terrain = new MyTerrain(this);
   }
 
   initLights() {
@@ -82,16 +77,9 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    //this.sphereMaterial.apply();
-    this.panorama.display(this.camera.position);
+    //this.panorama.display(this.camera.position);
+    this.terrain.display();
     
-    this.pushMatrix();
-    this.appearance.apply();
-    this.translate(0,-100,0);
-    this.scale(400,400,400);
-    this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
-    this.popMatrix();
 
     // ---- END Primitive drawing section
   }

@@ -43,9 +43,9 @@ export class MySphere extends CGFobject {
                 let y = this.radius * sin_lat
                 let z = this.radius * cos_lat * Math.sin(longitude)
 
-                this.vertices.push(x + this.scene.camera.position[0])
-                this.vertices.push(y + this.scene.camera.position[1])
-                this.vertices.push(z + this.scene.camera.position[2])
+                this.vertices.push(x)
+                this.vertices.push(y)
+                this.vertices.push(z)
 
                 this.texCoords.push(1 - j / this.slices, 1 - i / this.stacks)
                 if (this.inverse) {

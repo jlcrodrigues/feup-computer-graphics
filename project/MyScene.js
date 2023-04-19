@@ -31,7 +31,7 @@ export class MyScene extends CGFscene {
     let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
 
-    this.bird = new MyBird(this,0,0,[0,3,0]);
+    this.bird = new MyBird(this,90,0,[35,-50,50]);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -61,11 +61,11 @@ export class MyScene extends CGFscene {
   }
   initCameras() {
     this.camera = new CGFcamera(
-      0.7,
+      0.9,
       0.1,
       1000,
-      vec3.fromValues(30, 30, 10),
-      vec3.fromValues(0, 0, 0)
+      vec3.fromValues(-20, -20, -5),
+      vec3.fromValues(50, -30, 25)
     );
   }
   setDefaultAppearance() {

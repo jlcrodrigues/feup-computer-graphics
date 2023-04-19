@@ -118,14 +118,14 @@ export class MyBird extends CGFobject {
     }
 
     reset(){
-        this.orientation = 0;
+        this.orientation = 90;
         this.rawVelocity = 0;
         this.tiltAngle  = 0;
         this.wingAngle1 = 0;
         this.wingAngle2 = 0;
         this.wingUp1 = true;
         this.wingUp2 = true;
-        this.position = [0,3,0];
+        this.position = [35,-50,50];
     }
 
     display(){

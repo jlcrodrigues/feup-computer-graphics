@@ -130,16 +130,7 @@ export class MyScene extends CGFscene {
 
     this.panorama.display(this.camera.position);
     this.terrain.display();
-    
-    this.pushMatrix();
-    this.translate(this.bird.position[0],this.bird.position[1],this.bird.position[2]);
-    this.scale(0.6*this.scaleFactor,0.6*this.scaleFactor,0.6*this.scaleFactor);
-    this.rotate(this.bird.orientation * Math.PI/180,0,1,0);
-    this.rotate(this.bird.tiltAngle * Math.PI/180,0,0,1);
-    this.rotate(this.bird.fowardAngle,1,0,0);
-    this.rotate(- 50 * Math.PI/180,1,0,0);
     this.bird.display();
-    this.popMatrix();
 
     // ---- END Primitive drawing section
   }

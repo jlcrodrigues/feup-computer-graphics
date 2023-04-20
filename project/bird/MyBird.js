@@ -27,6 +27,8 @@ export class MyBird extends CGFobject {
         this.wingAngle2 = 0;
         this.wingUp1 = true;
         this.wingUp2 = true;
+        this.movingDown = false;
+        this.movingUp = false;
         
         this.initMaterials();
     }
@@ -43,6 +45,21 @@ export class MyBird extends CGFobject {
     updatePosition(){
         this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
+        if (this.movingDown){
+            this.position[1] -= 0.11;
+            if (this.position[1] <= -55){
+                this.position[1] = -55;
+                this.movingDown = false;
+                this.movingUp = true;
+            }
+        }
+        else if (this.movingUp){
+            this.position[1] += 0.11;
+            if (this.position[1] >= -48){
+                this.position[1] = -48;
+                this.movingUp = false;
+            }
+        }
     }
 
     updateVelocity(){
@@ -126,6 +143,8 @@ export class MyBird extends CGFobject {
         this.wingUp1 = true;
         this.wingUp2 = true;
         this.position = [35,-48,50];
+        this.movingDown = false;
+        this.movingUp = false;
     }
 
     display(){

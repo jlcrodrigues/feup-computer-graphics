@@ -23,11 +23,6 @@ export class MyBirdWing extends CGFobject {
 
     display(a1,a2){
 
-        //console.log("t " + t + "v " + v)
-
-        //var angleWing1 = (35 * Math.PI/180) * -Math.sin(frequency);
-        //var angleWing2 = (70 * Math.PI/180) * -Math.sin(frequency);
-
         this.materials.apply();
 
         //wing 1st part

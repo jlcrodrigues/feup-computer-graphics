@@ -105,7 +105,11 @@ export class MyScene extends CGFscene {
         
     if (this.gui.isKeyPressed("KeyR"))
         this.reset(); 
-        
+    
+    if (this.gui.isKeyPressed("KeyP")){
+      if (!(this.bird.movingDown || this.bird.movingUp))
+        this.bird.movingDown = true;
+    }
     if (keysPressed)
       console.log(text);
   }

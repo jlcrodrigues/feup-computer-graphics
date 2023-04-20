@@ -2,6 +2,8 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
+import { MyNest } from "./bird/MyNest.js"
+import { MySetOfEggs } from "./bird/MySetOfEggs.js"
 
 /**
  * MyScenew
@@ -27,16 +29,21 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    
-    let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
-    this.panorama = new MyPanorama(this, panoramaTexture);
-
-    this.bird = new MyBird(this,0,0,[0,3,0]);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.speedFactor = 1;
+    
+    let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
+    this.panorama = new MyPanorama(this, panoramaTexture);
+
+    this.bird = new MyBird(this,90,0,[35,-48,50]);
+
+    this.setEggs = new MySetOfEggs(this,5);
+    this.setEggs.spawnEggs();
+
+    this.nest = new MyNest(this,[60,-54,80]);
 
     this.enableTextures(true);
 
@@ -61,11 +68,11 @@ export class MyScene extends CGFscene {
   }
   initCameras() {
     this.camera = new CGFcamera(
-      0.7,
+      0.9,
       0.1,
       1000,
-      vec3.fromValues(30, 30, 10),
-      vec3.fromValues(0, 0, 0)
+      vec3.fromValues(-7, -18, 94),
+      vec3.fromValues(60, -43, 35)
     );
   }
   setDefaultAppearance() {
@@ -96,10 +103,28 @@ export class MyScene extends CGFscene {
         this.bird.tilt(-2.5);
         
     if (this.gui.isKeyPressed("KeyR"))
-        this.bird.reset(); 
-        
+        this.reset(); 
+    
+    if (this.gui.isKeyPressed("KeyP")){
+      if (!(this.bird.movingDown || this.bird.movingUp || !this.bird.egg.disabled))
+        this.bird.movingDown = true;
+    }
+
+    if (this.gui.isKeyPressed("KeyO")){
+      if (!(this.bird.movingDown || this.bird.movingUp || this.bird.egg.disabled))
+        this.bird.dropEgg();
+    }
+
     if (keysPressed)
       console.log(text);
+  }
+
+  reset() {
+    this.bird.reset();
+    this.nest.reset();
+    this.setEggs.spawnEggs();
+    this.camera.position = vec3.fromValues(-7, -18, 94);
+    this.camera.target = vec3.fromValues(60, -43, 35);
   }
 
   // called periodically (as per setUpdatePeriod() in init())
@@ -109,6 +134,7 @@ export class MyScene extends CGFscene {
     this.bird.updateVelocity();
     this.bird.updatePosition();
     this.bird.updateWingAngle();
+    this.setEggs.update();
     this.checkKeys();
   }
 
@@ -131,6 +157,8 @@ export class MyScene extends CGFscene {
     this.panorama.display(this.camera.position);
     this.terrain.display();
     this.bird.display();
+    this.nest.display();
+    this.setEggs.display();
 
     // ---- END Primitive drawing section
   }

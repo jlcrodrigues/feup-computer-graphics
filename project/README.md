@@ -18,3 +18,8 @@
 
 ![Terrain](screenshots/cg-t06g03-proj-3.png)
 ![Terrain 2](screenshots/cg-t06g03-proj-3-2.png)
+
+### Eggs and Nest
+
+![Eggs and Nest](screenshots/cg-t06g03-proj-4.png)
+![Eggs and Nest 2](screenshots/cg-t06g03-proj-4-2.gif)

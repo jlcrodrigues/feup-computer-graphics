@@ -36,6 +36,13 @@ export class MyBirdEgg extends CGFobject {
     }
 
     updateVelocity(){
+        if (this.rawVelocity-0.005 <= 0){
+            this.rawVelocity = 0;
+        }
+        else {
+            this.rawVelocity -= 0.005;
+        } 
+        this.velocity = this.rawVelocity * this.speedFactor;
     }
 
     updateWingAngle(){

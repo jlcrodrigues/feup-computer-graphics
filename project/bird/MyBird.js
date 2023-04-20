@@ -48,7 +48,7 @@ export class MyBird extends CGFobject {
         this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         if (this.movingDown){
-            this.position[1] -= 0.11;
+            this.position[1] -= 0.11 * this.scene.speedFactor;
             if (this.position[1] <= -55){
                 this.catchEgg();
                 this.position[1] = -55;
@@ -57,7 +57,7 @@ export class MyBird extends CGFobject {
             }
         }
         else if (this.movingUp){
-            this.position[1] += 0.11;
+            this.position[1] += 0.11 * this.scene.speedFactor;
             if (this.position[1] >= -48){
                 this.position[1] = -48;
                 this.movingUp = false;
@@ -67,6 +67,8 @@ export class MyBird extends CGFobject {
     }
 
     catchEgg(){
+        console.log(this.scene.camera.position)
+        console.log(this.scene.camera.target)
         // see all eggs and check if they are 2 unit apart from the bird 
         for (let i = 0; i < this.scene.eggs.length; i++){
             var d = Math.sqrt(Math.pow(this.scene.eggs[i].position[0] - this.position[0],2) + Math.pow(this.scene.eggs[i].position[2] - this.position[2],2));

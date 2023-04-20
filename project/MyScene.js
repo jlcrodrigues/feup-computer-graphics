@@ -72,8 +72,8 @@ export class MyScene extends CGFscene {
       0.9,
       0.1,
       1000,
-      vec3.fromValues(-20, -15, -10),
-      vec3.fromValues(60, -30, 35)
+      vec3.fromValues(-7, -18, 94),
+      vec3.fromValues(60, -43, 35)
     );
   }
   setDefaultAppearance() {
@@ -107,7 +107,7 @@ export class MyScene extends CGFscene {
         this.reset(); 
     
     if (this.gui.isKeyPressed("KeyP")){
-      if (!(this.bird.movingDown || this.bird.movingUp))
+      if (!(this.bird.movingDown || this.bird.movingUp || !this.bird.egg.disabled))
         this.bird.movingDown = true;
     }
     if (keysPressed)
@@ -117,21 +117,47 @@ export class MyScene extends CGFscene {
   reset() {
     this.bird.reset();
 
-    this.camera.position = vec3.fromValues(-20, -15, -10);
-    this.camera.target = vec3.fromValues(60, -30, 35);
+    
+    
+    this.camera.position = vec3.fromValues(-7, -18, 94);
+    this.camera.target = vec3.fromValues(60, -43, 35);
 
     this.spawnEggs();
   }
 
   spawnEggs() {
-    for (let i = 0; i < 5; i++) {
-      // generate random position x 60 a 100, y -54, z -20 a 50
+    let minDistance = 20; // Minimum distance between eggs
+    let numEggs = 5;
+    let eggsSpawned = 0;
+    
+    while (eggsSpawned < numEggs) {
+      // Generate a random position for the egg
       let x = Math.random() * (100 - 60) + 60;
       let y = -55;
       let z = Math.random() * (50 - (-20)) + (-20);
-      this.eggs[i] = new  MyBirdEgg(this,0,[x,y,z]);
+      
+      // Check the distance to all previously spawned eggs
+      let tooClose = false;
+      for (let i = 0; i < eggsSpawned; i++) {
+        let distance = Math.sqrt(
+          Math.pow(x - this.eggs[i].position[0], 2) +
+          Math.pow(y - this.eggs[i].position[1], 2) +
+          Math.pow(z - this.eggs[i].position[2], 2)
+        );
+        if (distance < minDistance) {
+          tooClose = true;
+          break;
+        }
+      }
+      
+      // If the egg is far enough away, add it to the array
+      if (!tooClose) {
+        this.eggs[eggsSpawned] = new MyBirdEgg(this, 0, [x, y, z]);
+        eggsSpawned++;
+      }
     }
   }
+  
 
 
   // called periodically (as per setUpdatePeriod() in init())

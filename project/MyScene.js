@@ -40,8 +40,8 @@ export class MyScene extends CGFscene {
 
     this.bird = new MyBird(this,90,0,[35,-48,50]);
 
-    this.eggs = new MySetOfEggs(this,5);
-    this.eggs.spawnEggs();
+    this.setEggs = new MySetOfEggs(this,5);
+    this.setEggs.spawnEggs();
 
     this.nest = new MyNest(this,[60,-54,80]);
 
@@ -122,7 +122,7 @@ export class MyScene extends CGFscene {
   reset() {
     this.bird.reset();
     this.nest.reset();
-    this.eggs.spawnEggs();
+    this.setEggs.spawnEggs();
     this.camera.position = vec3.fromValues(-7, -18, 94);
     this.camera.target = vec3.fromValues(60, -43, 35);
   }
@@ -134,7 +134,7 @@ export class MyScene extends CGFscene {
     this.bird.updateVelocity();
     this.bird.updatePosition();
     this.bird.updateWingAngle();
-    this.eggs.update();
+    this.setEggs.update();
     this.checkKeys();
   }
 
@@ -158,7 +158,7 @@ export class MyScene extends CGFscene {
     this.terrain.display();
     this.bird.display();
     this.nest.display();
-    this.eggs.display();
+    this.setEggs.display();
 
     // ---- END Primitive drawing section
   }

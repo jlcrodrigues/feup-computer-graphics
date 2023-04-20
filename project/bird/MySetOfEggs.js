@@ -7,7 +7,7 @@ import { MyBirdEgg } from './MyBirdEgg.js';
  * @param scene - Reference to MyScene object
  * @param position - position of the nest
  */
-export class MyNest extends CGFobject {
+export class MySetOfEggs extends CGFobject {
 	constructor(scene,eggs) {
 		super(scene);
         this.eggs = new Array(eggs);
@@ -16,12 +16,12 @@ export class MyNest extends CGFobject {
 
     spawnEggs() {
         let minDistance = 20; // Minimum distance between eggs
-        let numEggs = 5;
+        let numEggs = this.numberEggs;
         let eggsSpawned = 0;
         
         while (eggsSpawned < numEggs) {
           // Generate a random position for the egg
-          let x = Math.random() * (100 - 60) + 60;
+          let x = Math.random() * (100 - 70) + 70;
           let y = -55;
           let z = Math.random() * (50 - (-20)) + (-20);
           
@@ -41,7 +41,7 @@ export class MyNest extends CGFobject {
           
           // If the egg is far enough away, add it to the array
           if (!tooClose) {
-            this.eggs[eggsSpawned] = new MyBirdEgg(this, 0, [x, y, z]);
+            this.eggs[eggsSpawned] = new MyBirdEgg(this.scene, 0, [x, y, z]);
             eggsSpawned++;
           }
         }
@@ -60,7 +60,7 @@ export class MyNest extends CGFobject {
     }
 
     update(){
-        for (let i = 0; i < numberEggs; i++){
+        for (let i = 0; i < this.numberEggs; i++){
             this.eggs[i].updateVelocity();
             this.eggs[i].updatePosition();
           }
@@ -70,11 +70,11 @@ export class MyNest extends CGFobject {
     display(){
         // display eggs
         for (var i = 0; i < this.numberEggs; i++){
-            this.pushMatrix();
-            this.translate(this.eggs[i].position[0],this.eggs[i].position[1],this.eggs[i].position[2]);
-            this.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
+            this.scene.pushMatrix();
+            this.scene.translate(this.eggs[i].position[0],this.eggs[i].position[1],this.eggs[i].position[2]);
+            this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
             this.eggs[i].display();
-            this.popMatrix();
+            this.scene.popMatrix();
         }
 
     }

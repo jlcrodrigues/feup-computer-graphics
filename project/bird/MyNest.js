@@ -1,6 +1,5 @@
 import {CGFobject,CGFappearance,CGFtexture} from '../../lib/CGF.js';
 import { MyHemisphere } from '../shapes/MyHemisphere.js';
-import { MyBirdEgg } from './MyBirdEgg.js';
 import { MySetOfEggs } from './MySetOfEggs.js';
 
 /**
@@ -14,8 +13,8 @@ export class MyNest extends CGFobject {
 		super(scene);
         this.position = position;
         this.nest = new MyHemisphere(this.scene, 20, 20,3);
-        this.eggs = new MySetOfEggs(this.scene,5);
-        this.eggs.createEggsInNest(this.position);
+        this.setEggs = new MySetOfEggs(this.scene,5);
+        this.setEggs.createEggsInNest(this.position);
         this.nrEggsInNest = 0;
     
         this.initMaterials();
@@ -34,8 +33,8 @@ export class MyNest extends CGFobject {
 
     reset(){
         this.nrEggsInNest = 0;
-        for (var i = 0; i < this.eggs.length; i++){
-            this.eggs[i].disable();
+        for (var i = 0; i < this.setEggs.numberEggs; i++){
+            this.setEggs.eggs[i].disable();
         }
     }
 
@@ -50,7 +49,7 @@ export class MyNest extends CGFobject {
         this.nest.display();
         this.scene.popMatrix();
 
-        this.eggs.display();
+        this.setEggs.display();
 
     }
 

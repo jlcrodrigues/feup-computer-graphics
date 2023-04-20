@@ -47,7 +47,7 @@ export class MyBirdEgg extends CGFobject {
             let distance = Math.sqrt(Math.pow(this.position[0]-this.scene.nest.position[0],2) + Math.pow(this.position[2]-this.scene.nest.position[2],2));
             if (distance <= 4){
                 this.disabled = true;
-                this.scene.nest.eggs[this.scene.nest.nrEggsInNest].enable();
+                this.scene.nest.setEggs.eggs[this.scene.nest.nrEggsInNest].enable();
                 this.scene.nest.nrEggsInNest++;
             }
         }

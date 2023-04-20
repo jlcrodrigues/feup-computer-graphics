@@ -68,13 +68,13 @@ export class MyBird extends CGFobject {
 
     catchEgg(){
         // see all eggs and check if they are 2 unit apart from the bird 
-        for (let i = 0; i < this.scene.eggs.length; i++){
-            if (this.scene.eggs[i].disabled){
+        for (let i = 0; i < this.scene.setEggs.numberEggs; i++){
+            if (this.scene.setEggs.eggs[i].disabled){
                 continue;
             }
-            var d = Math.sqrt(Math.pow(this.scene.eggs[i].position[0] - this.position[0],2) + Math.pow(this.scene.eggs[i].position[2] - this.position[2],2));
+            var d = Math.sqrt(Math.pow(this.scene.setEggs.eggs[i].position[0] - this.position[0],2) + Math.pow(this.scene.setEggs.eggs[i].position[2] - this.position[2],2));
             if (d <= 4){
-                this.scene.eggs[i].disable();
+                this.scene.setEggs.eggs[i].disable();
                 this.egg.enable();
                 break;
             }
@@ -84,13 +84,13 @@ export class MyBird extends CGFobject {
     dropEgg(){
         this.egg.disable();
         // search the first egg that is disabled and enable it
-        for (let i = 0; i < this.scene.eggs.length; i++){
-            if (this.scene.eggs[i].disabled){
-                this.scene.eggs[i].enable();
-                this.scene.eggs[i].position = [this.position[0],this.position[1]-1.3,this.position[2]-1.7];
-                this.scene.eggs[i].rawVelocity = this.rawVelocity;
-                this.scene.eggs[i].orientation = this.orientation;
-                this.scene.eggs[i].falling = true;
+        for (let i = 0; i < this.scene.setEggs.numberEggs; i++){
+            if (this.scene.setEggs.eggs[i].disabled){
+                this.scene.setEggs.eggs[i].enable();
+                this.scene.setEggs.eggs[i].position = [this.position[0],this.position[1]-1.3,this.position[2]-1.7];
+                this.scene.setEggs.eggs[i].rawVelocity = this.rawVelocity;
+                this.scene.setEggs.eggs[i].orientation = this.orientation;
+                this.scene.setEggs.eggs[i].falling = true;
                 break;
             }
         }

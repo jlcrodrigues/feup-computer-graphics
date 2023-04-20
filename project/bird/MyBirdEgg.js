@@ -18,6 +18,7 @@ export class MyBirdEgg extends CGFobject {
         this.eggTop = new MyHemisphere(this.scene, 20, 20,0.5);
         this.eggBottom = new MyHemisphere(this.scene, 20, 20,0.5);
         this.disabled = disabled;
+        this.falling = true;
         
         this.initMaterials();
     }
@@ -36,9 +37,19 @@ export class MyBirdEgg extends CGFobject {
     updatePosition(){
         this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
-        this.position[1] -= 0.1 * this.scene.scaleFactor;
-        if(this.position[1] <= -55){
+        if (this.falling){
+            this.position[1] -= 0.1 * this.scene.scaleFactor;
+        }
+        if(this.position[1] <= -55 && this.falling){
             this.position[1] = -55;
+            this.falling = false;
+            //distance to nest
+            let distance = Math.sqrt(Math.pow(this.position[0]-this.scene.nest.position[0],2) + Math.pow(this.position[2]-this.scene.nest.position[2],2));
+            if (distance <= 5){
+                this.disabled = true;
+                this.scene.nest.eggs[this.scene.nest.numberEggs].enable();
+                this.scene.nest.numberEggs++;
+            }
         }
     }
 

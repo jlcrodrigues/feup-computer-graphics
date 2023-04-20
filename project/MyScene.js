@@ -29,6 +29,11 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
+
+    //Objects connected to MyInterface
+    this.displayAxis = true;
+    this.scaleFactor = 1;
+    this.speedFactor = 1;
     
     let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
@@ -40,11 +45,6 @@ export class MyScene extends CGFscene {
     this.spawnEggs();
 
     this.nest = new MyNest(this,[60,-54,80]);
-
-    //Objects connected to MyInterface
-    this.displayAxis = true;
-    this.scaleFactor = 1;
-    this.speedFactor = 1;
 
     this.enableTextures(true);
 
@@ -122,6 +122,7 @@ export class MyScene extends CGFscene {
 
   reset() {
     this.bird.reset();
+    this.nest.reset();
 
     
     

@@ -16,7 +16,7 @@ export class MyBird extends CGFobject {
         this.birdBody = new MyBirdBody(this.scene);
         this.leftBirdWing = new MyBirdWing(this.scene);
         this.rightBirdWing = new MyBirdWing(this.scene);
-        this.egg = new MyBirdEgg(this.scene,0,position,true);
+        this.egg = new MyBirdEgg(this.scene,0,[position[0],position[1],position[2]],true);
         this.time = 0;
         this.orientation = orientation; //in degrees 0 means pointing to the positive z axis
         this.rawVelocity = velocity;
@@ -48,7 +48,7 @@ export class MyBird extends CGFobject {
         this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         if (this.movingDown){
-            this.position[1] -= 0.11 * this.scene.speedFactor;
+            this.position[1] -= 0.14 * this.scene.speedFactor;
             if (this.position[1] <= -55){
                 this.catchEgg();
                 this.position[1] = -55;
@@ -57,17 +57,21 @@ export class MyBird extends CGFobject {
             }
         }
         else if (this.movingUp){
-            this.position[1] += 0.11 * this.scene.speedFactor;
+            this.position[1] += 0.14 * this.scene.speedFactor;
             if (this.position[1] >= -48){
                 this.position[1] = -48;
                 this.movingUp = false;
             }
         }
+
     }
 
     catchEgg(){
         // see all eggs and check if they are 2 unit apart from the bird 
         for (let i = 0; i < this.scene.eggs.length; i++){
+            if (this.scene.eggs[i].disabled){
+                continue;
+            }
             var d = Math.sqrt(Math.pow(this.scene.eggs[i].position[0] - this.position[0],2) + Math.pow(this.scene.eggs[i].position[2] - this.position[2],2));
             if (d <= 5){
                 this.scene.eggs[i].disable();
@@ -83,9 +87,10 @@ export class MyBird extends CGFobject {
         for (let i = 0; i < this.scene.eggs.length; i++){
             if (this.scene.eggs[i].disabled){
                 this.scene.eggs[i].enable();
-                this.scene.eggs[i].position = [this.egg.position[0],this.egg.position[1]-1.3,this.egg.position[2]-1.7];
+                this.scene.eggs[i].position = [this.position[0],this.position[1]-1.3,this.position[2]-1.7];
                 this.scene.eggs[i].rawVelocity = this.rawVelocity;
                 this.scene.eggs[i].orientation = this.orientation;
+                this.scene.eggs[i].falling = true;
                 break;
             }
         }
@@ -181,7 +186,7 @@ export class MyBird extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(this.position[0],this.position[1],this.position[2]);
-        this.scene.scale(0.7*this.scene.scaleFactor,0.7*this.scene.scaleFactor,0.7*this.scene.scaleFactor);
+        this.scene.scale(0.8*this.scene.scaleFactor,0.8*this.scene.scaleFactor,0.8*this.scene.scaleFactor);
         this.scene.rotate(this.orientation * Math.PI/180,0,1,0);
         this.scene.rotate(this.tiltAngle * Math.PI/180,0,0,1);
         this.scene.rotate(this.fowardAngle,1,0,0);

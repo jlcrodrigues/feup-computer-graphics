@@ -73,7 +73,7 @@ export class MyBird extends CGFobject {
                 continue;
             }
             var d = Math.sqrt(Math.pow(this.scene.eggs[i].position[0] - this.position[0],2) + Math.pow(this.scene.eggs[i].position[2] - this.position[2],2));
-            if (d <= 5){
+            if (d <= 4){
                 this.scene.eggs[i].disable();
                 this.egg.enable();
                 break;
@@ -186,7 +186,7 @@ export class MyBird extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(this.position[0],this.position[1],this.position[2]);
-        this.scene.scale(0.8*this.scene.scaleFactor,0.8*this.scene.scaleFactor,0.8*this.scene.scaleFactor);
+        this.scene.scale(0.9*this.scene.scaleFactor,0.9*this.scene.scaleFactor,0.9*this.scene.scaleFactor);
         this.scene.rotate(this.orientation * Math.PI/180,0,1,0);
         this.scene.rotate(this.tiltAngle * Math.PI/180,0,0,1);
         this.scene.rotate(this.fowardAngle,1,0,0);

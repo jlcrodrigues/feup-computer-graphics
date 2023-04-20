@@ -45,10 +45,10 @@ export class MyBirdEgg extends CGFobject {
             this.falling = false;
             //distance to nest
             let distance = Math.sqrt(Math.pow(this.position[0]-this.scene.nest.position[0],2) + Math.pow(this.position[2]-this.scene.nest.position[2],2));
-            if (distance <= 5){
+            if (distance <= 4){
                 this.disabled = true;
-                this.scene.nest.eggs[this.scene.nest.numberEggs].enable();
-                this.scene.nest.numberEggs++;
+                this.scene.nest.eggs[this.scene.nest.nrEggsInNest].enable();
+                this.scene.nest.nrEggsInNest++;
             }
         }
     }
@@ -61,22 +61,6 @@ export class MyBirdEgg extends CGFobject {
             this.rawVelocity -= 0.01;
         } 
         this.velocity = this.rawVelocity * this.speedFactor;
-    }
-
-    updateWingAngle(){
-    }
-
-    accelerate(v){      
-    }
-
-    turn(v){
-    }
-
-    tilt(a){
-    }
-
-    reset(){
-
     }
 
     enable(){

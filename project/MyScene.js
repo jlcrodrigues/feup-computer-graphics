@@ -2,8 +2,8 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
-import { MyBirdEgg} from "./bird/MyBirdEgg.js"
 import { MyNest } from "./bird/MyNest.js"
+import { MySetOfEggs } from "./bird/MySetOfEggs.js"
 
 /**
  * MyScenew
@@ -40,9 +40,8 @@ export class MyScene extends CGFscene {
 
     this.bird = new MyBird(this,90,0,[35,-48,50]);
 
-    // create a new array of eggs
-    this.eggs = new Array(5); 
-    this.spawnEggs();
+    this.eggs = new MySetOfEggs(this,5);
+    this.eggs.spawnEggs();
 
     this.nest = new MyNest(this,[60,-54,80]);
 
@@ -123,49 +122,10 @@ export class MyScene extends CGFscene {
   reset() {
     this.bird.reset();
     this.nest.reset();
-
-    
-    
+    this.eggs.spawnEggs();
     this.camera.position = vec3.fromValues(-7, -18, 94);
     this.camera.target = vec3.fromValues(60, -43, 35);
-
-    this.spawnEggs();
   }
-
-  spawnEggs() {
-    let minDistance = 20; // Minimum distance between eggs
-    let numEggs = 5;
-    let eggsSpawned = 0;
-    
-    while (eggsSpawned < numEggs) {
-      // Generate a random position for the egg
-      let x = Math.random() * (100 - 60) + 60;
-      let y = -55;
-      let z = Math.random() * (50 - (-20)) + (-20);
-      
-      // Check the distance to all previously spawned eggs
-      let tooClose = false;
-      for (let i = 0; i < eggsSpawned; i++) {
-        let distance = Math.sqrt(
-          Math.pow(x - this.eggs[i].position[0], 2) +
-          Math.pow(y - this.eggs[i].position[1], 2) +
-          Math.pow(z - this.eggs[i].position[2], 2)
-        );
-        if (distance < minDistance) {
-          tooClose = true;
-          break;
-        }
-      }
-      
-      // If the egg is far enough away, add it to the array
-      if (!tooClose) {
-        this.eggs[eggsSpawned] = new MyBirdEgg(this, 0, [x, y, z]);
-        eggsSpawned++;
-      }
-    }
-  }
-  
-
 
   // called periodically (as per setUpdatePeriod() in init())
 	update(t){
@@ -174,12 +134,7 @@ export class MyScene extends CGFscene {
     this.bird.updateVelocity();
     this.bird.updatePosition();
     this.bird.updateWingAngle();
-
-    for (let i = 0; i < 5; i++){
-      this.eggs[i].updateVelocity();
-      this.eggs[i].updatePosition();
-    }
-    
+    this.eggs.update();
     this.checkKeys();
   }
 
@@ -203,14 +158,7 @@ export class MyScene extends CGFscene {
     this.terrain.display();
     this.bird.display();
     this.nest.display();
-    for (let i = 0; i < 5; i++){
-      this.pushMatrix();
-      this.translate(this.eggs[i].position[0],this.eggs[i].position[1],this.eggs[i].position[2]);
-      this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
-      this.eggs[i].display();
-      this.popMatrix();
-    }
-
+    this.eggs.display();
 
     // ---- END Primitive drawing section
   }

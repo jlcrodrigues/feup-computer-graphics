@@ -2,6 +2,7 @@ import {CGFobject,CGFappearance, CGFtexture} from '../../lib/CGF.js';
 import { MyBirdHead } from './MyBirdHead.js';
 import { MyBirdBody } from './MyBirdBody.js';
 import { MyBirdWing } from './MyBirdWing.js';
+import { MyBirdEgg } from './MyBirdEgg.js';
 
 /**
  * MyBird
@@ -15,6 +16,7 @@ export class MyBird extends CGFobject {
         this.birdBody = new MyBirdBody(this.scene);
         this.leftBirdWing = new MyBirdWing(this.scene);
         this.rightBirdWing = new MyBirdWing(this.scene);
+        this.egg = new MyBirdEgg(this.scene,0,position,true);
         this.time = 0;
         this.orientation = orientation; //in degrees 0 means pointing to the positive z axis
         this.rawVelocity = velocity;
@@ -48,6 +50,7 @@ export class MyBird extends CGFobject {
         if (this.movingDown){
             this.position[1] -= 0.11;
             if (this.position[1] <= -55){
+                this.catchEgg();
                 this.position[1] = -55;
                 this.movingDown = false;
                 this.movingUp = true;
@@ -58,6 +61,19 @@ export class MyBird extends CGFobject {
             if (this.position[1] >= -48){
                 this.position[1] = -48;
                 this.movingUp = false;
+            }
+        }
+        this.egg.position = this.position;
+    }
+
+    catchEgg(){
+        // see all eggs and check if they are 2 unit apart from the bird 
+        for (let i = 0; i < this.scene.eggs.length; i++){
+            var d = Math.sqrt(Math.pow(this.scene.eggs[i].position[0] - this.position[0],2) + Math.pow(this.scene.eggs[i].position[2] - this.position[2],2));
+            if (d <= 2){
+                this.scene.eggs[i].disable();
+                this.egg.enable();
+                break;
             }
         }
     }
@@ -145,6 +161,7 @@ export class MyBird extends CGFobject {
         this.position = [35,-48,50];
         this.movingDown = false;
         this.movingUp = false;
+        this.egg.disable();
     }
 
     display(){
@@ -188,7 +205,17 @@ export class MyBird extends CGFobject {
         this.rightBirdWing.display(this.wingAngle1,this.wingAngle2);
         this.scene.popMatrix();
 
+        // egg
+        this.scene.pushMatrix();
+        this.scene.translate(0,-Math.sin(this.wingAngle2)*0.3,0);
+        this.scene.translate(0,-1.3,-1.7);
+        this.scene.rotate(55*Math.PI/180,1,0,0)
+        this.egg.display();
         this.scene.popMatrix();
+
+        this.scene.popMatrix();
+
+        
 
     }
 

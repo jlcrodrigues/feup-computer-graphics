@@ -2,8 +2,8 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
-import { MyEgg} from "./nest/MyBirdEgg.js"
-import { MyNest } from "./nest/MyNest.js"
+import { MyBirdEgg} from "./bird/MyBirdEgg.js"
+import { MyNest } from "./bird/MyNest.js"
 
 /**
  * MyScenew
@@ -129,7 +129,7 @@ export class MyScene extends CGFscene {
       let x = Math.random() * (100 - 60) + 60;
       let y = -55;
       let z = Math.random() * (50 - (-20)) + (-20);
-      this.eggs[i] = new MyEgg(this,0,0,[x,y,z]);
+      this.eggs[i] = new  MyBirdEgg(this,0,[x,y,z]);
     }
   }
 
@@ -164,8 +164,14 @@ export class MyScene extends CGFscene {
     this.terrain.display();
     this.bird.display();
     this.nest.display();
-    for (let i = 0; i < 5; i++)
+    for (let i = 0; i < 5; i++){
+      this.pushMatrix();
+      this.translate(this.eggs[i].position[0],this.eggs[i].position[1],this.eggs[i].position[2]);
+      this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
       this.eggs[i].display();
+      this.popMatrix();
+    }
+
 
     // ---- END Primitive drawing section
   }

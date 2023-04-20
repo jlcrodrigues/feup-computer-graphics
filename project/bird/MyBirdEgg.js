@@ -6,17 +6,17 @@ import { MyHemisphere } from '../shapes/MyHemisphere.js';
  * @constructor
  * @param scene - Reference to MyScene object
  */
-export class MyEgg extends CGFobject {
-	constructor(scene,orientation,velocity,position) {
+export class MyBirdEgg extends CGFobject {
+	constructor(scene,velocity,position,disabled = false) {
 		super(scene);
         this.time = 0;
-        this.rotation = orientation; //in degrees in y axis
         this.rawVelocity = velocity;
         this.position = position;
         this.speedFactor = 1;
         this.velocity = this.rawVelocity * this.speedFactor;
         this.eggTop = new MyHemisphere(this.scene, 20, 20,0.5);
         this.eggBottom = new MyHemisphere(this.scene, 20, 20,0.5);
+        this.disabled = disabled;
         
         this.initMaterials();
     }
@@ -54,19 +54,28 @@ export class MyEgg extends CGFobject {
 
     }
 
+    enable(){
+        this.disabled = false;
+    } 
+
+    disable(){
+        this.disabled = true;
+    }
+
     display(){
+
+        if (this.disabled){
+            return;
+        }
 
         this.materials.apply();
 
         this.scene.pushMatrix();
-        this.scene.translate(this.position[0],this.position[1],this.position[2]);
-        this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
         this.eggBottom.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(this.position[0],this.position[1],this.position[2]);
-        this.scene.scale(this.scene.scaleFactor,1.7*this.scene.scaleFactor,this.scene.scaleFactor);
+        this.scene.scale(1,1.7,1);
         this.scene.rotate(Math.PI,0,0,1);
         this.eggTop.display();
         this.scene.popMatrix();

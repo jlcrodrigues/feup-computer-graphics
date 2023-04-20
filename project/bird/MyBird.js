@@ -63,18 +63,29 @@ export class MyBird extends CGFobject {
                 this.movingUp = false;
             }
         }
-        this.egg.position = this.position;
     }
 
     catchEgg(){
-        console.log(this.scene.camera.position)
-        console.log(this.scene.camera.target)
         // see all eggs and check if they are 2 unit apart from the bird 
         for (let i = 0; i < this.scene.eggs.length; i++){
             var d = Math.sqrt(Math.pow(this.scene.eggs[i].position[0] - this.position[0],2) + Math.pow(this.scene.eggs[i].position[2] - this.position[2],2));
-            if (d <= 2){
+            if (d <= 5){
                 this.scene.eggs[i].disable();
                 this.egg.enable();
+                break;
+            }
+        }
+    }
+
+    dropEgg(){
+        this.egg.disable();
+        // search the first egg that is disabled and enable it
+        for (let i = 0; i < this.scene.eggs.length; i++){
+            if (this.scene.eggs[i].disabled){
+                this.scene.eggs[i].enable();
+                this.scene.eggs[i].position = [this.egg.position[0],this.egg.position[1]-1.3,this.egg.position[2]-1.7];
+                this.scene.eggs[i].rawVelocity = this.rawVelocity;
+                this.scene.eggs[i].orientation = this.orientation;
                 break;
             }
         }

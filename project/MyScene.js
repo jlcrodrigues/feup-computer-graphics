@@ -110,6 +110,12 @@ export class MyScene extends CGFscene {
       if (!(this.bird.movingDown || this.bird.movingUp || !this.bird.egg.disabled))
         this.bird.movingDown = true;
     }
+
+    if (this.gui.isKeyPressed("KeyO")){
+      if (!(this.bird.movingDown || this.bird.movingUp || this.bird.egg.disabled))
+        this.bird.dropEgg();
+    }
+
     if (keysPressed)
       console.log(text);
   }
@@ -167,6 +173,12 @@ export class MyScene extends CGFscene {
     this.bird.updateVelocity();
     this.bird.updatePosition();
     this.bird.updateWingAngle();
+
+    for (let i = 0; i < 5; i++){
+      this.eggs[i].updateVelocity();
+      this.eggs[i].updatePosition();
+    }
+    
     this.checkKeys();
   }
 

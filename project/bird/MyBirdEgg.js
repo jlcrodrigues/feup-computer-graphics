@@ -12,6 +12,7 @@ export class MyBirdEgg extends CGFobject {
         this.time = 0;
         this.rawVelocity = velocity;
         this.position = position;
+        this.orientation = 0;
         this.speedFactor = 1;
         this.velocity = this.rawVelocity * this.speedFactor;
         this.eggTop = new MyHemisphere(this.scene, 20, 20,0.5);
@@ -33,14 +34,20 @@ export class MyBirdEgg extends CGFobject {
 	}
 
     updatePosition(){
+        this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180) * this.scene.scaleFactor;
+        this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
+        this.position[1] -= 0.1 * this.scene.scaleFactor;
+        if(this.position[1] <= -55){
+            this.position[1] = -55;
+        }
     }
 
     updateVelocity(){
-        if (this.rawVelocity-0.005 <= 0){
+        if (this.rawVelocity-0.01 <= 0){
             this.rawVelocity = 0;
         }
         else {
-            this.rawVelocity -= 0.005;
+            this.rawVelocity -= 0.01;
         } 
         this.velocity = this.rawVelocity * this.speedFactor;
     }

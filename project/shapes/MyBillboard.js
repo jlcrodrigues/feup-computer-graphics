@@ -3,13 +3,14 @@ import { MyUnitCube } from './MyUnitCube.js';
 
 
 export class MyBillboard extends CGFobject {
-	constructor(scene, x, y, z) {
+	constructor(scene, size, texture, x, y, z) {
 		super(scene);
+        this.size = size;
         this.position = [x, y, z];
 
         this.cube = new MyUnitCube(this.scene, true);
 
-        this.texture = new CGFtexture(this.scene, "./images/billboardtree.png");
+        this.texture = texture;
         this.material = new CGFappearance(this.scene);
         this.material.setTexture(this.texture)
         this.material.setTextureWrap('REPEAT', 'REPEAT');
@@ -28,7 +29,7 @@ export class MyBillboard extends CGFobject {
         this.scene.pushMatrix();
         this.material.apply();
         this.scene.translate(...this.position);
-        this.scene.scale(10, 10, 10);
+        this.scene.scale(this.size, this.size, this.size);
         this.scene.rotate(-angle, ...cross);
         this.cube.display();
         this.scene.popMatrix();

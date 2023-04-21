@@ -5,9 +5,9 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MyUnitCube extends CGFobject {
-	constructor(scene, topOpen=false) {
+	constructor(scene, vertOpen=false) {
 		super(scene);
-		this.topOpen = topOpen;
+		this.vertOpen = vertOpen;
 		this.initBuffers();
 	}
 	
@@ -46,15 +46,16 @@ export class MyUnitCube extends CGFobject {
 			-size, size, size, //14 / 3
 			-size, size, -size, //15 / 6
 
-			// bottom face
-			-size, -size, -size, //16 / 5
-			size, -size, -size, //17 / 4
-			size, -size, size, //18 / 1
-			-size, -size, size //19 / 0
 		];
 
-		if (!this.topOpen) {
+		if (!this.vertOpen) {
 			this.vertices.push(
+				// bottom face
+				-size, -size, -size, //16 / 5
+				size, -size, -size, //17 / 4
+				size, -size, size, //18 / 1
+				-size, -size, size, //19 / 0
+
 				// top face
 				-size, size, size, //20 / 3
 				size, size, size, //21 / 2
@@ -78,15 +79,16 @@ export class MyUnitCube extends CGFobject {
 
 			// left face
 			12, 13, 14,
-			14, 15, 12,
+			14, 15, 12
 
-			// bottom face
-			16, 17, 18,
-			18, 19, 16,
 		];
 
-		if (!this.topOpen) {
+		if (!this.vertOpen) {
 			this.indices.push(
+				// bottom face
+				16, 17, 18,
+				18, 19, 16,
+
 				// top face
 				20, 21, 22,
 				22, 23, 20
@@ -117,22 +119,21 @@ export class MyUnitCube extends CGFobject {
 			-1, 0, 0,
 			-1, 0, 0,
 			-1, 0, 0,
-
-	
-			// bottom
-			0, -1, 0,
-			0, -1, 0,
-			0, -1, 0,
-			0, -1, 0
 		];
 
-		if (!this.topOpen) {
+		if (!this.vertOpen) {
 			this.normals.push(
+				// bottom
+				0, -1, 0,
+				0, -1, 0,
+				0, -1, 0,
+				0, -1, 0,
+
 				// top
 				0, 1, 0,
 				0, 1, 0,
 				0, 1, 0,
-				0, 1, 0,
+				0, 1, 0
 			)
 
 		}
@@ -160,23 +161,22 @@ export class MyUnitCube extends CGFobject {
 			0, 1,
 			1, 1,
 			1, 0,
-			0, 0,
-
-
-			// bottom
-			1, 0,
-			0, 0,
-			0, 1,
-			1, 1
+			0, 0
 		];
 
-		if (!this.topOpen) {
+		if (!this.vertOpen) {
 			this.texCoords.push(
+				// bottom
+				1, 0,
+				0, 0,
+				0, 1,
+				1, 1,
+
 				// top
 				1, 1,
 				0, 1,
 				0, 0,
-				1, 0,
+				1, 0
 			)
 		}
 

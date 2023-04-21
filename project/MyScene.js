@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyTerrain } from "./shapes/MyTerrain.js";
+import { MyBillboard } from "./shapes/MyBillboard.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
 import { MyNest } from "./bird/MyNest.js"
@@ -37,6 +38,8 @@ export class MyScene extends CGFscene {
     
     let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
+
+    this.billboard = new MyBillboard(this, 40, -50, 40);
 
     this.bird = new MyBird(this,90,0,[35,-48,50]);
 
@@ -159,6 +162,7 @@ export class MyScene extends CGFscene {
     this.bird.display();
     this.nest.display();
     this.setEggs.display();
+    this.billboard.display();
 
     // ---- END Primitive drawing section
   }

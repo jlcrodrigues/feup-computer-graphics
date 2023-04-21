@@ -1,33 +1,18 @@
-import { CGFobject, CGFtexture, CGFappearance } from '../../lib/CGF.js';
-import { MyBillboard } from './MyBillboard.js';
+import { MyTreePatch } from './MyTreePatch.js';
 
-
-export class MyTreeRowPatch extends CGFobject {
+export class MyTreeRowPatch extends MyTreePatch {
 	constructor(scene, x, y, z) {
-		super(scene);
-        this.position = [x, y, z];
-        this.initTrees()
-
+		super(scene, 6, x, y, z);
+        super.initTrees(this.getPos)
 	}
 
-    initTrees() {
-        this.trees = []
-        for (let i = 0; i < 6; i++) {
-            let texture = new CGFtexture(this.scene, "./images/billboardtree.png");
-            let size = Math.random() * 4 + 5
-            let offset = Math.random() - 0.5;
-            let coords = [
-                this.position[0] + i * 10 + offset * 2,
-                this.position[1],
-                this.position[2]  + offset * 2]
-
-            this.trees.push(new MyBillboard(this.scene, size, texture, ...coords));
-        }
+    getPos(position, i) {
+        let offset1 = Math.random() - 0.5;
+        let offset2 = Math.random() - 0.5;
+        return [
+            position[0] + i * 10 + offset1 * 5,
+            position[1],
+            position[2]  + offset2 * 5]
     }
 
-    display() {
-        for (let tree of this.trees) {
-            tree.display();
-        }
-    }
 }

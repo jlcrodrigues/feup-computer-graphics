@@ -1,6 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyTerrain } from "./shapes/MyTerrain.js";
 import { MyTreeRowPatch } from "./shapes/MyTreeRowPatch.js";
+import { MyTreeGroupPatch } from "./shapes/MyTreeGroupPatch.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./bird/MyBird.js"
 import { MyNest } from "./bird/MyNest.js"
@@ -39,7 +40,23 @@ export class MyScene extends CGFscene {
     let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
 
-    this.rowPatch = new MyTreeRowPatch(this, 40, -53, 40);
+    this.florest = []
+    this.florest.push(
+      new MyTreeRowPatch(this, 40, -53, 40),
+      new MyTreeRowPatch(this, 70, -53, -35),
+      new MyTreeRowPatch(this, 20, -53, 80),
+      new MyTreeRowPatch(this, 30, -53, 70),
+      new MyTreeRowPatch(this, -30, -53, 50),
+
+      new MyTreeGroupPatch(this, 50, -53, 50),
+      new MyTreeGroupPatch(this, 80, -53, 50),
+      new MyTreeGroupPatch(this, 60, -53, 10),
+      new MyTreeGroupPatch(this, 80, -53, -20),
+      new MyTreeGroupPatch(this, 90, -53, 10),
+      new MyTreeGroupPatch(this, 10, -53, 40),
+      new MyTreeGroupPatch(this, -10, -53, 60),
+      new MyTreeGroupPatch(this, -50, -53, 60),
+    )
 
     this.bird = new MyBird(this,90,0,[35,-48,50]);
 
@@ -162,7 +179,9 @@ export class MyScene extends CGFscene {
     this.bird.display();
     this.nest.display();
     this.setEggs.display();
-    this.rowPatch.display()
+
+    for (let tree of this.florest)
+      tree.display();
 
     // ---- END Primitive drawing section
   }

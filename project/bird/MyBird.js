@@ -185,7 +185,7 @@ export class MyBird extends CGFobject {
     display(){
 
         this.scene.pushMatrix();
-        this.scene.translate(this.position[0],this.position[1],this.position[2]);
+        this.scene.translate(this.position[0],this.position[1]-2+(2*this.scene.scaleFactor),this.position[2]);
         this.scene.scale(0.9*this.scene.scaleFactor,0.9*this.scene.scaleFactor,0.9*this.scene.scaleFactor);
         this.scene.rotate(this.orientation * Math.PI/180,0,1,0);
         this.scene.rotate(this.tiltAngle * Math.PI/180,0,0,1);

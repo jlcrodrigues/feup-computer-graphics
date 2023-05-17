@@ -19,6 +19,7 @@ export class MyBirdEgg extends CGFobject {
         this.eggBottom = new MyHemisphere(this.scene, 20, 20,0.5);
         this.disabled = disabled;
         this.falling = true;
+        this.fallingVelocity = 0;
         
         this.initMaterials();
     }
@@ -38,11 +39,12 @@ export class MyBirdEgg extends CGFobject {
         this.position[2] += this.velocity * 0.2 * Math.cos(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         if (this.falling){
-            this.position[1] -= 0.1 * this.scene.scaleFactor;
+            this.position[1] -= this.fallingVelocity * this.scene.scaleFactor;
         }
         if(this.position[1] <= -55 && this.falling){
             this.position[1] = -55;
             this.falling = false;
+            this.fallingVelocity = 0;
             //distance to nest
             let distance = Math.sqrt(Math.pow(this.position[0]-this.scene.nest.position[0],2) + Math.pow(this.position[2]-this.scene.nest.position[2],2));
             if (distance <= 4){
@@ -61,6 +63,9 @@ export class MyBirdEgg extends CGFobject {
             this.rawVelocity -= 0.01;
         } 
         this.velocity = this.rawVelocity * this.speedFactor;
+        if (this.falling){
+            this.fallingVelocity += 0.007;
+        }
     }
 
     enable(){

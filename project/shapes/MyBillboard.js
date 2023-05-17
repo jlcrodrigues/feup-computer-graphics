@@ -29,7 +29,7 @@ export class MyBillboard extends CGFobject {
         this.scene.pushMatrix();
         this.material.apply();
         this.scene.translate(...this.position);
-        this.scene.scale(this.size, this.size, this.size);
+        this.scene.scale(this.size * (0.8 + 0.2 * this.scene.scaleFactor), this.size * this.scene.scaleFactor, this.size * (0.8 + 0.2 * this.scene.scaleFactor));
         this.scene.rotate(-angle, ...cross);
         this.cube.display();
         this.scene.popMatrix();

@@ -92,7 +92,7 @@ export class MyScene extends CGFscene {
         break;
       case "close":
         this.camera.setTarget(vec3.fromValues(this.bird.position[0],this.bird.position[1],this.bird.position[2]));
-        this.camera.setPosition(vec3.fromValues(this.bird.position[0]-10,this.bird.position[1]+10,this.bird.position[2]+10))
+        this.camera.setPosition(vec3.fromValues(this.bird.position[0]- 8 - (3 * this.scaleFactor),this.bird.position[1]+ 8 + (3 * this.scaleFactor),this.bird.position[2] + 8 + (3 * this.scaleFactor)))
         break;
       case "beak":
         // point in front of the bird
@@ -110,8 +110,12 @@ export class MyScene extends CGFscene {
         x = this.bird.position[0] - 10 * Math.sin(this.bird.orientation * Math.PI / 180);
         y = this.bird.position[1] + (4 * this.scaleFactor);
         z = this.bird.position[2] - 10 * Math.cos(this.bird.orientation * Math.PI / 180);
+
+        targetx = this.bird.position[0] + 15 * Math.sin(this.bird.orientation * Math.PI / 180);
+        targety = this.bird.position[1] - 5;
+        targetz = this.bird.position[2] + 15 * Math.cos(this.bird.orientation * Math.PI / 180);
         this.camera.setPosition(vec3.fromValues(x,y,z));
-        this.camera.setTarget(vec3.fromValues(this.bird.position[0],this.bird.position[1],this.bird.position[2]));
+        this.camera.setTarget(vec3.fromValues(targetx,targety,targetz));
         break;
     }
   }

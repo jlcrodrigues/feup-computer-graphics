@@ -8,10 +8,11 @@ import { MyBirdEgg } from './MyBirdEgg.js';
  * @param position - position of the nest
  */
 export class MySetOfEggs extends CGFobject {
-	constructor(scene,eggs) {
+	constructor(scene,eggs,pos) {
 		super(scene);
         this.eggs = new Array(eggs);
         this.numberEggs = eggs;
+        this.pos = pos;
     }
 
     spawnEggs() {
@@ -22,7 +23,7 @@ export class MySetOfEggs extends CGFobject {
         while (eggsSpawned < numEggs) {
           // Generate a random position for the egg
           let x = Math.random() * (100 - 70) + 70;
-          let y = -55;
+          let y = -59;
           let z = Math.random() * (50 - (-20)) + (-20);
           
           // Check the distance to all previously spawned eggs
@@ -47,16 +48,10 @@ export class MySetOfEggs extends CGFobject {
         }
       }
 
-    createEggsInNest(position){
-        var x = position[0];
-        var y = position[1];
-        var z = position[2];
-        var offset = 1;
-        this.eggs[0] = new MyBirdEgg(this.scene,0,[x,y,z],true);
-        this.eggs[1] = new MyBirdEgg(this.scene,0,[x+offset,y,z+offset],true);
-        this.eggs[2] = new MyBirdEgg(this.scene,0,[x+offset,y,z-offset],true);
-        this.eggs[3] = new MyBirdEgg(this.scene,0,[x-offset,y,z+offset],true);
-        this.eggs[4] = new MyBirdEgg(this.scene,0,[x-offset,y,z-offset],true);
+    createEggsInNest(){
+        for (let i = 0; i < this.numberEggs; i++){
+            this.eggs[i] = new MyBirdEgg(this.scene,0,this.eggPosition(i),true);
+        }
     }
 
     update(){
@@ -67,17 +62,40 @@ export class MySetOfEggs extends CGFobject {
     }
 
 
-    display(){
+    display(nest){
         // display eggs
         for (var i = 0; i < this.numberEggs; i++){
             this.scene.pushMatrix();
-            this.scene.translate(this.eggs[i].position[0],this.eggs[i].position[1],this.eggs[i].position[2]);
+            if (!nest){
+              this.scene.translate(this.eggs[i].position[0],this.eggs[i].position[1],this.eggs[i].position[2]);
+            }
+            else{
+              this.scene.translate(this.eggPosition(i)[0],this.eggPosition(i)[1],this.eggPosition(i)[2]);
+            }
             this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
             this.eggs[i].display();
             this.scene.popMatrix();
         }
 
     }
+
+    eggPosition(i){
+        var offset = 1 * this.scene.scaleFactor;
+        var y = 1.7 - (1 * this.scene.scaleFactor);
+        switch(i){
+            case 0:
+                return [this.pos[0],this.pos[1]-y,this.pos[2]];
+            case 1:
+                return [this.pos[0]+offset,this.pos[1]-y,this.pos[2]+offset];
+            case 2:
+                return [this.pos[0]+offset,this.pos[1]-y,this.pos[2]-offset];
+            case 3:
+                return [this.pos[0]-offset,this.pos[1]-y,this.pos[2]+offset];
+            case 4:
+                return [this.pos[0]-offset,this.pos[1]-y,this.pos[2]-offset];
+        }
+    }
+
 
     updateBuffers(){
         // reinitialize buffers

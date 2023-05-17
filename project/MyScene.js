@@ -31,10 +31,13 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
 
+    // Labels and ID's for camera selection on MyInterface
+    this.cameraIDs = { 'Far': "far" , 'Close': "close", 'Bird Beak': "beak", 'Behind Bird': "bird", 'Free Roam': "free"};
+
     //Objects connected to MyInterface
-    this.displayAxis = true;
     this.scaleFactor = 1;
     this.speedFactor = 1;
+    this.selectedCamera = "far";
     
     let panoramaTexture = new CGFtexture(this, "./images/panorama4.jpg");
     this.panorama = new MyPanorama(this, panoramaTexture);
@@ -43,7 +46,7 @@ export class MyScene extends CGFscene {
 
     this.bird = new MyBird(this,90,0,[35,-48,50]);
 
-    this.setEggs = new MySetOfEggs(this,5);
+    this.setEggs = new MySetOfEggs(this,5,[0,0,0]);
     this.setEggs.spawnEggs();
 
     this.nest = new MyNest(this,[110,-54,30]);
@@ -78,6 +81,41 @@ export class MyScene extends CGFscene {
       vec3.fromValues(60, -43, 35)
     );
   }
+
+  updateCameras() {
+    let x,y,z;
+    let targetx,targety,targetz;
+    switch (this.selectedCamera) {
+      case "far":
+        this.camera.setTarget(vec3.fromValues(this.bird.position[0],this.bird.position[1],this.bird.position[2]));
+        this.camera.setPosition(vec3.fromValues(-7, -18, 94));
+        break;
+      case "close":
+        this.camera.setTarget(vec3.fromValues(this.bird.position[0],this.bird.position[1],this.bird.position[2]));
+        this.camera.setPosition(vec3.fromValues(this.bird.position[0]-10,this.bird.position[1]+10,this.bird.position[2]+10))
+        break;
+      case "beak":
+        // point in front of the bird
+        targetx = this.bird.position[0] + 15 * Math.sin(this.bird.orientation * Math.PI / 180);
+        targety = this.bird.position[1] - 5;
+        targetz = this.bird.position[2] + 15 * Math.cos(this.bird.orientation * Math.PI / 180);
+
+        x = this.bird.position[0] + 3 * Math.sin(this.bird.orientation * Math.PI / 180);
+        y = this.bird.position[1] -2.5+(1.5*this.scaleFactor);
+        z = this.bird.position[2] + 3 * Math.cos(this.bird.orientation * Math.PI / 180);
+        this.camera.setPosition(vec3.fromValues(x,y,z));
+        this.camera.setTarget(vec3.fromValues(targetx,targety,targetz));
+        break;
+      case "bird":
+        x = this.bird.position[0] - 10 * Math.sin(this.bird.orientation * Math.PI / 180);
+        y = this.bird.position[1] + (4 * this.scaleFactor);
+        z = this.bird.position[2] - 10 * Math.cos(this.bird.orientation * Math.PI / 180);
+        this.camera.setPosition(vec3.fromValues(x,y,z));
+        this.camera.setTarget(vec3.fromValues(this.bird.position[0],this.bird.position[1],this.bird.position[2]));
+        break;
+    }
+  }
+
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -139,6 +177,7 @@ export class MyScene extends CGFscene {
     this.bird.updatePosition();
     this.bird.updateWingAngle();
     this.setEggs.update();
+    this.updateCameras();
     this.checkKeys();
   }
 
@@ -153,16 +192,13 @@ export class MyScene extends CGFscene {
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
-    // Draw axis
-    if (this.displayAxis) this.axis.display();
-
     // ---- BEGIN Primitive drawing section
 
     this.panorama.display(this.camera.position);
     this.terrain.display();
     this.bird.display();
     this.nest.display();
-    this.setEggs.display();
+    this.setEggs.display(false);
 
     this.forest.display();
 

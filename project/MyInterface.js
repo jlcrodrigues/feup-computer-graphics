@@ -17,8 +17,7 @@ export class MyInterface extends CGFinterface {
         // https://github.com/dataarts/dat.gui/blob/master/API.md
         this.gui = new dat.GUI();
 
-        //Checkbox element in GUI
-        this.gui.add(this.scene, 'displayAxis').name('Display Axis');
+        this.gui.add(this.scene, 'selectedCamera', this.scene.cameraIDs).name('Selected Camera').onChange(this.clearKeys.bind(this));
 
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.5, 3).name('Scale Factor');
@@ -39,6 +38,10 @@ export class MyInterface extends CGFinterface {
         this.processKeyboard=function(){};
         // create a named array to store which keys are being pressed
         this.activeKeys={};
+    }
+
+    clearKeys() {
+        this.activeKeys = {};
     }
 
     processKeyDown(event) {

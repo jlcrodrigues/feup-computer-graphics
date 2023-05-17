@@ -13,8 +13,8 @@ export class MyNest extends CGFobject {
 		super(scene);
         this.position = position;
         this.nest = new MyHemisphere(this.scene, 20, 20,3);
-        this.setEggs = new MySetOfEggs(this.scene,5);
-        this.setEggs.createEggsInNest(this.position);
+        this.setEggs = new MySetOfEggs(this.scene,5,this.position);
+        this.setEggs.createEggsInNest();
         this.nrEggsInNest = 0;
     
         this.initMaterials();
@@ -49,7 +49,7 @@ export class MyNest extends CGFobject {
         this.nest.display();
         this.scene.popMatrix();
 
-        this.setEggs.display();
+        this.setEggs.display(true);
 
     }
 

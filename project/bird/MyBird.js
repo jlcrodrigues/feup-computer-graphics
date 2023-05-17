@@ -49,9 +49,9 @@ export class MyBird extends CGFobject {
         this.position[0] += this.velocity * 0.2 * Math.sin(this.orientation * Math.PI/180) * this.scene.scaleFactor;
         if (this.movingDown){
             this.position[1] -= 0.14 * this.scene.speedFactor;
-            if (this.position[1] <= -55){
+            if (this.position[1] <= -54){
                 this.catchEgg();
-                this.position[1] = -55;
+                this.position[1] = -54;
                 this.movingDown = false;
                 this.movingUp = true;
             }
@@ -87,7 +87,7 @@ export class MyBird extends CGFobject {
         for (let i = 0; i < this.scene.setEggs.numberEggs; i++){
             if (this.scene.setEggs.eggs[i].disabled){
                 this.scene.setEggs.eggs[i].enable();
-                this.scene.setEggs.eggs[i].position = [this.position[0],this.position[1]-1.3,this.position[2]-1.7];
+                this.scene.setEggs.eggs[i].position = [this.position[0],this.position[1]-1.7,this.position[2]];
                 this.scene.setEggs.eggs[i].rawVelocity = this.rawVelocity;
                 this.scene.setEggs.eggs[i].orientation = this.orientation;
                 this.scene.setEggs.eggs[i].falling = true;

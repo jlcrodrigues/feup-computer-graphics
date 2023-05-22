@@ -2,7 +2,12 @@
 
 ## Group T06G03
 
-## Proj 
+| Name             | Number    | E-Mail             |
+| ---------------- | --------- | ------------------ |
+| José Luís Cunha Rodrigues         | 202008462 | up202008462@up.pt                |
+| Tiago Filipe Magalhães Barbosa    | 202004926 | up202004926@up.pt     
+
+## Project
 
 ### Panorama
 

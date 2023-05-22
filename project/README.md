@@ -27,3 +27,18 @@
 ### Trees
 
 ![Forest](screenshots/cg-t06g03-proj-5.png)
+
+### Extras (Egg parabolic)
+
+![Parabolic](screenshots/cg-t06g03-proj-6.gif)
+
+
+### Extras (Cameras - not in project specification)
+
+
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 10px;">
+  <img src="screenshots/cg-t06g03-proj-7-1.gif" alt="Image 1">
+  <img src="screenshots/cg-t06g03-proj-7-2.gif" alt="Image 2">
+  <img src="screenshots/cg-t06g03-proj-7-3.gif" alt="Image 3">
+  <img src="screenshots/cg-t06g03-proj-7-4.gif" alt="Image 4">
+</div>

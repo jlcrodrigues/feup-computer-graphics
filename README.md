@@ -1,5 +1,8 @@
 # CG 2022/2023
 
+Project developed as part of the Computer Graphics curricular unit @ FEUP. 
+Using WebGL, we created a series of graphical interfaces. To see the final product, head to its [description](project/README.md).
+
 ## Group T06G03
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
